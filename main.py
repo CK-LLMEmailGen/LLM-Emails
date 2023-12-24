@@ -29,7 +29,8 @@ async def read_index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 
-@app.post("/generate")
+
+@app.post("/")
 async def generate_text(data: dict):
     source = data.get("source")
     destination = data.get("destination")
@@ -53,23 +54,45 @@ async def generate_text(data: dict):
     
     # Assuming you've obtained information and answers from the PDFs
     pdf_information = {
-        "Source": all_documents[1],
-        "Destination": all_documents[0],
+        "Source": all_documents[0],
+        "Destination": all_documents[1],
         # Add more information retrieved from PDFs
     }
+    
 
-    default_prompt=f'Generate an personalized email in about 200-250 words saying that how {pdf_information["Source"]} \
-    services can be useful for {pdf_information["Destination"]}.\
+    default_prompt=f'Generate an personalized email in about 200-250 words saying that how .\
             The information regarding the source and destination are obtained from text files and \
             stored as follows{pdf_information}.Utilize this information and provide me an \
-            appropriate mail in a short and sweet manner saying that how the source services are useful to destination.\
-            By reading the mail you have generated, the reader should show willingness to use the services.The email should always \
-            written from the source to the destination and the recipient is {target}.The source and the destination are given in {pdf_information}'
+            appropriate mail in a short and sweet manner saying that how the source services are helpful to destination platform.\
+            By reading the mail you have generated, the reader should show willingness to use the services.The email should always be \
+            written from the source to the destination explaining how services offered by source company is useful for the destination company\
+            and the recipient is {target}.The source and the destination are given in {pdf_information}.The specifications on how the mail \
+            should be are given in {prompt}.Include these requirements/specifications while generating your response'
 
     
-    output=generate_email(default_prompt)
+    email_content=generate_email(default_prompt)
+    formatted_email_content = email_content.replace("\n", "<br>")  # Replace newlines with HTML line breaks
     
-    return {"output": output}
+    # Construct HTML response to display formatted email content
+    html_response = f"<!DOCTYPE html>\
+    <html>\
+    <head>\
+    <style>\
+    body \
+    {{font-family: Arial, sans-serif;line-height: 1.6;}}\
+    </style>\
+    </head>\
+    <body>\
+    <h3>Generated Email</h3>\
+    <div>\
+    {formatted_email_content}\
+    </div>\
+    </body>\
+    </html>"
+    
+    return html_response
+    
+    
 
 
 def generate_email(prompt):
@@ -86,4 +109,5 @@ def generate_email(prompt):
 
   # Get the generated email text
   generated_email = response['choices'][0]['message']['content']
-  return wrap_text(generated_email)
+  
+  return (generated_email)

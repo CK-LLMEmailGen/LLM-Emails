@@ -2,10 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>FastAPI HTML Page</title>
+    <title>Mail Generation</title>
+    <style>
+        div{
+                margin-left: 20%;
+                margin-right: 20%;
+                /* Add more styles as needed */
+            }
+    </style>
 </head>
 <body>
-    <h1>Text Generation</h1>
+    
+
+    <h1>Mail Generation</h1>
     <form id="textForm">
         <label for="source">Source Name:</label>
         <select id="source" name="source">
@@ -30,14 +39,13 @@
         <input type="text" id="prompt" name="prompt"><br><br>
         
         <button type="button" onclick="generateText()">Generate</button>
-        <div id="output"></div>
-
-       
+        
     </form>
     <br>
     <div id="output"></div>
-    <script>
-    function generateText() {
+   
+    <!-- <script>
+    async function generateText() {
         const source = document.getElementById("source").value;
         const destination = document.getElementById("destination").value;
         const target = document.getElementById("target").value;
@@ -55,22 +63,44 @@
                 target: target,
                 prompt: promptText
             })
-        })
-        .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
+        });
+        
+    const responseData = await response.text();
+    document.getElementById('output').innerHTML = responseData;
+    }
+</script> -->
+<script>
+    async function generateText() {
+        const source = document.getElementById("source").value;
+        const destination = document.getElementById("destination").value;
+        const target = document.getElementById("target").value;
+        const promptText = document.getElementById("prompt").value;
+
+        try {
+            const response = await fetch('/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    source: source,
+                    destination: destination,
+                    target: target,
+                    prompt: promptText
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            let responseData = await response.text();
+            console.log(responseData);
+            responseData.replace(/"/g, ' ');
+            document.getElementById('output').innerHTML = responseData; // Display the response in the output div
+        } catch (error) {
+            console.error('Error:', error);
         }
-        return response.text(); // Retrieve the response as text
-    })
-    .then(text => {
-        // Access the output text and display it on the webpage
-        const outputDiv = document.getElementById("output");
-        outputDiv.innerHTML = `<p>${text}</p>`;
-    })
-    .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
-        // Handle errors or display an error message on the webpage
-    });
     }
 </script>
 
