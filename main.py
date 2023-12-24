@@ -33,14 +33,15 @@ async def read_index(request: Request):
 @app.post("/")
 async def generate_text(data: dict):
     source = data.get("source")
-    destination = data.get("destination")
-    target = data.get("target")
+    target = data.get("destination")
+    target_person = data.get("target")
     prompt = data.get("prompt")
+    tone=data.get("tone")
 
     
 
     # Use the received values as needed, for example:
-    document_files = [source+".txt", destination+".txt"]
+    document_files = [source+".txt",target+".txt",target_person+".txt"]
     all_documents=[]
     # Load multiple documents
     for file_path in document_files:
@@ -55,20 +56,28 @@ async def generate_text(data: dict):
     # Assuming you've obtained information and answers from the PDFs
     pdf_information = {
         "Source": all_documents[0],
-        "Destination": all_documents[1],
+        "target": all_documents[1],
+        "target_person":all_documents[2]
+        
         # Add more information retrieved from PDFs
     }
     
 
-    default_prompt=f'Generate an personalized email in about 200-250 words saying that how .\
-            The information regarding the source and destination are obtained from text files and \
-            stored as follows{pdf_information}.Utilize this information and provide me an \
-            appropriate mail in a short and sweet manner saying that how the source services are helpful to destination platform.\
-            By reading the mail you have generated, the reader should show willingness to use the services.The email should always be \
-            written from the source to the destination explaining how services offered by source company is useful for the destination company\
-            and the recipient is {target}.The source and the destination are given in {pdf_information}.The specifications on how the mail \
-            should be are given in {prompt}.Include these requirements/specifications while generating your response'
+    # default_prompt=f'Generate an personalized email in about 200-250 words saying that how .\
+    #         The information regarding the source and destination are obtained from text files and \
+    #         stored as follows{pdf_information}.Utilize this information and provide me an \
+    #         appropriate mail in a short and sweet manner saying that how the source services are helpful to destination platform.\
+    #         By reading the mail you have generated, the reader should show willingness to use the services.The email should always be \
+    #         written from the source to the destination explaining how services offered by source company is useful for the destination company\
+    #         and the recipient is {target}.The source and the destination are given in {pdf_information}.The specifications on how the mail \
+    #         should be are given in {prompt}.Include these requirements/specifications while generating your response'
 
+    default_prompt=f'Find {source} mail address and {target_person} mail address from {pdf_information}. From {source} mail address, send a personalized mail to {target_person} mail address in about 200-250 words saying that how {source} services can be useful for {target}.Do not include content related to {source} in the email subject.Start the email subject with topic related to {target_person} and praising {target} for its services. \
+        The information regarding the {source} ,{target} and {target_person} are obtained from text files and \
+        stored as follows{pdf_information}.Utilize this information and provide me an \
+        appropriate mail in a short and sweet manner saying that how the {source} services are useful to {target}.\
+        By reading the mail you have generated, the reader should show willingness to use the services.The tone of your response \
+        should be {tone}'
     
     email_content=generate_email(default_prompt)
     formatted_email_content = email_content.replace("\n", "<br>")  # Replace newlines with HTML line breaks
@@ -97,7 +106,7 @@ async def generate_text(data: dict):
 
 def generate_email(prompt):
   response = openai.ChatCompletion.create(
-      model="gpt-4-1106-preview", temperature=0,
+      model="gpt-4-1106-preview", temperature=1,
       messages=[
           {
               "role": "system",
@@ -111,3 +120,6 @@ def generate_email(prompt):
   generated_email = response['choices'][0]['message']['content']
   
   return (generated_email)
+
+
+  
