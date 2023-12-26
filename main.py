@@ -72,14 +72,22 @@ async def generate_text(data: dict):
     #         and the recipient is {target}.The source and the destination are given in {pdf_information}.The specifications on how the mail \
     #         should be are given in {prompt}.Include these requirements/specifications while generating your response'
 
-    default_prompt=f'Find {source} mail address and {target_person} mail address from {pdf_information}. From {source} mail address, send a personalized mail to {target_person} mail address in about 200-250 words saying that how {source} services can be useful for {target}.Do not include content related to {source} in the email subject.Start the email subject with topic related to {target_person} and praising {target} for its services. \
+    default_prompt=f"Find {source} mail address and {target_person} mail address from {pdf_information}.\
+        From {source} mail address, send a personalized mail to {target_person} mail address in about 200-250 words\
+        saying that how {source} services can be useful for {target}.Do not include content related to {source} in the \
+        email subject.Start the email subject with topic related to {target_person} and praising {target} for its services. \
         The information regarding the {source} ,{target} and {target_person} are obtained from text files and \
-        stored as follows{pdf_information}.Utilize this information and provide me an \
-        appropriate mail in a short and sweet manner saying that how the {source} services are useful to {target}.\
-        By reading the mail you have generated, the reader should show willingness to use the services.The tone of your response \
-        should be {tone}'
+        stored as follows{pdf_information}.use the {target_person} information while generating your response and provide me an \
+        appropriate mail saying that how the {source} services are useful to {target}\
+        and the response should be short and sweet.By reading the mail you have generated, \
+        the reader should show willingness to use the services.Start the email as if you are talking to the {target_person}\
+        and include their information for example about their university or working experiences or any other information \
+        available at {pdf_information['target_person'] }.Add additional information about their information for example \
+        the places or any experiences with their universityand then start saying about how the{source} services are useful for \
+        the {target}.T"
     
     email_content=generate_email(default_prompt)
+    changed_tone=changeTone(email_content,tone)
     formatted_email_content = email_content.replace("\n", "<br>")  # Replace newlines with HTML line breaks
     
     # Construct HTML response to display formatted email content
@@ -122,4 +130,13 @@ def generate_email(prompt):
   return (generated_email)
 
 
-  
+def changeTone(info,tone):
+    prompt1=f"Identify the tone of the{info} and classify it whether it is formal or semi formal or informal.\
+    Just give me the answer only do not give any reasons or description"
+    print(generate_email(prompt1))
+    prompt=f"Change the {info} into the tone specified here {tone}"
+    toned_mail = generate_email(prompt)
+    prompt2=f"what is the tone of {toned_mail}.Is it formal or informal or semi formal\
+    Just give me the answer only do not give any reasons or description"
+    print(generate_email(prompt2))
+    return toned_mail
