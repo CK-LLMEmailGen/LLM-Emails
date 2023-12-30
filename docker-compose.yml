@@ -1,0 +1,12 @@
+services:
+  web:
+    build:
+     # We are using the created dockerfile
+      dockerfile: Dockerfile
+     # We are using ports 8000 both on host and on the server
+    ports:
+      - "8000:8000"
+     # Mounting our Current Working Directory to the
+    volumes:
+      - /code
+      - /code/static

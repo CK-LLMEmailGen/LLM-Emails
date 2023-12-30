@@ -10,6 +10,6 @@ tasks:
       cd templates/react/my-react-app/
       npm install
       
-  - command: python main.py
+  # - command: python main.py
 
 

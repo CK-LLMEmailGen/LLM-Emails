@@ -1,5 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
+from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from langchain.document_loaders import TextLoader
@@ -9,15 +11,18 @@ import os
 from dotenv import load_dotenv
 from my_lib import wrap_text
 from fastapi.responses import Response
+import pandas as pd
+import math
 
 load_dotenv()
 # Create an instance of the FastAPI class
 app = FastAPI()
 
-# app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/prospects", StaticFiles(directory="/workspace/LLM-Emails/react-app/build", html = True), name="static")
 
 # Initialize Jinja2Templates
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory="react-app")
+react_Templates = Jinja2Templates(directory="/workspace/LLM-Emails/react-app/build")
 
 #get apikey
 api_key = os.getenv("API_KEY")
@@ -28,6 +33,23 @@ openai.api_key = api_key
 async def read_index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
+@app.get("/prospects")
+async def show_Prospects(request: Request):
+    return react_Templates.TemplateResponse("index.html", {"request": request})
+
+@app.post("/prospects")
+async def fetch_Prospects(request: Request, filters: dict):
+    sample_Companies = [
+        ['google', 'Google', 'Mountain View, California', 10001, 80000, 'past1Month', ['Series A'], 10000000, 800000000], 
+        ['amazon', 'Amazon', 'Seattle, Washington', 1300, 40000, 'past3Months', ['Series A'], 5000000, 500000000], 
+        ['cstrike', 'CrowdStrike', 'Austin, Texas', 800, 20000, 'past1Year', ['Series C'], 700000, 4000000], 
+        ['mondee', 'Mondee', 'Austin, Texas', 300, 5000, 'past1Year', ['Series D'], 500000, 1000000], 
+        ['citi', 'Citi', 'New York, New York', 4400, 30000, 'past9Months', ['Series B'], 4000000, 60000000]
+    ]
+    company_Atrributes = ['id', 'name', 'location', 'employees', 'webTraffic', 'lastFundingDate', 'lastFundingType', 'lastFundingAmount', 'totalFunding']
+    company_Df = pd.DataFrame(sample_Companies, columns = company_Atrributes)
+    
+    return JSONResponse(content = {'companies': company_Df.to_dict(orient = 'records'), 'employees': []})
 
 
 @app.post("/")
@@ -39,7 +61,6 @@ async def generate_text(data: dict):
     tone=data.get("tone")
 
     
-
     # Use the received values as needed, for example:
     document_files = [source+".txt",target+".txt",target_person+".txt"]
     all_documents=[]

@@ -9,13 +9,12 @@ import './filters.css';
 const FilterPage = () => {
   const [filters, setFilters] = useState({
     companyLocation: '',
-    employeeMin: '',
-    employeeMax: '',
     employeesRange: [1, 10001],
     visitorsMin: '',
     visitorsMax: '',
-    fundingMin: '',
-    fundingMax: '',
+    // fundingMin: '',
+    // fundingMax: '',
+    lastFundingDate: '',
     fundingType: [],
     amountMin: '',
     amountMax: '',
@@ -23,32 +22,88 @@ const FilterPage = () => {
     totalMax: '',
   });
 
-  const handleFilterChange = (filterName, value) => {
-    setFilters((prevFilters) => ({ ...prevFilters, [filterName]: value }));
-  };
-
-  const applyFilters = () => {
-    // Implement filter logic here
-    // Access filter values from the 'filters' state
-    console.log(filters);
-  };
+  const [prospects, setProspects] = useState({
+    companies: [],
+    employees: [],
+  });
 
   const resetFilters = () => {
     // Reset filter state to initial values
     setFilters({
       companyLocation: '',
-      employeeMin: '',
-      employeeMax: '',
       employeesRange: [1, 10001],
       visitorsMin: '',
       visitorsMax: '',
-      fundingMin: '',
-      fundingMax: '',
+      // fundingMin: '',
+      // fundingMax: '',
+      lastFundingDate: '',
       fundingType: [],
       amountMin: '',
       amountMax: '',
       totalMin: '',
       totalMax: '',
+    });
+
+    // updateDropdownOptions('company-dropdown', [], 'Prospective Companies');
+  };
+
+
+  const handleFilterChange = (filterName, value) => {
+    setFilters((prevFilters) => ({ ...prevFilters, [filterName]: value }));
+  };
+  
+    // useEffect(() => {
+    //   // Trigger the handlePostData function when filters change
+    //   handlePostData();
+    // }, [postData]);
+
+  const applyFilters = async () => {
+    try {
+      const response = await fetch('/prospects', 
+      {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json',},
+        body: JSON.stringify(filters),
+      });
+
+      if (response.ok) {
+        console.log('POST request successful');
+        const result = await response.json();
+        setProspects(result);
+      } 
+      else { console.error('Failed to send data'); }
+    }
+
+    catch (error) {
+      console.error('Error:', error);
+    }
+
+    // const filteredCompanies = prospects.companies;
+    updateDropdownOptions('company-dropdown', prospects.companies, 'Prospective Companies');
+    console.log(filters);
+
+  };
+
+  const updateDropdownOptions = (dropdownId, options, default_Text = "") => {
+    const dropdown = document.getElementById(dropdownId);
+
+    // Clear existing options
+    dropdown.innerHTML = '';
+
+    // Add default option
+    const defaultOption = document.createElement('option');
+    defaultOption.disabled = true;
+    defaultOption.selected = true;
+    defaultOption.textContent = default_Text ;
+    dropdown.appendChild(defaultOption);
+    
+    if (options.length === 0) { return; }
+    // Add filtered options
+    options.forEach((option) => {
+      const newOption = document.createElement('option');
+      newOption.value = option['name'];
+      newOption.textContent = option['name'];
+      dropdown.appendChild(newOption);
     });
   };
 
@@ -131,7 +186,8 @@ const FilterPage = () => {
                   onChange={() => handleFilterChange('lastFundingDate', option)}
                 />
                 <label htmlFor={`last-funding-${option}`} className="radio-button-label">
-                  {option.replace('past', 'Past ').replace('Months', ' Months')}</label>
+                  {option.replace('past', 'Past ').replace('Months', ' Months').replace('Year', ' Year')}
+                </label>
               </div>
             ))}
           </div>
