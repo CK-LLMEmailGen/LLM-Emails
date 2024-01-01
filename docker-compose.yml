@@ -6,7 +6,7 @@ services:
      # We are using ports 8000 both on host and on the server
     ports:
       - "8000:8000"
-     # Mounting our Current Working Directory to the
+     # Mounting our Current Working Directory
     volumes:
-      - /code
-      - /code/static
+      - ".:${CWD:-/code}"
+      # - /code/static

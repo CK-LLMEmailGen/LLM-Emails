@@ -1,6 +1,7 @@
 fastapi
 uvicorn
 jinja2
+pandas
 python-dotenv
 langchain==0.0.137
 openai==0.28

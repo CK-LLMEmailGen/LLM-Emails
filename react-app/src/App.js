@@ -59,7 +59,7 @@ const FilterPage = () => {
 
   const applyFilters = async () => {
     try {
-      const response = await fetch('/prospects', 
+      const response = await fetch('/', 
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json',},

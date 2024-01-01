@@ -18,26 +18,21 @@ load_dotenv()
 # Create an instance of the FastAPI class
 app = FastAPI()
 
-app.mount("/prospects", StaticFiles(directory="/workspace/LLM-Emails/react-app/build", html = True), name="static")
+app.mount("/", StaticFiles(directory="react-app/build", html = True), name="static")
 
 # Initialize Jinja2Templates
 templates = Jinja2Templates(directory="react-app")
-react_Templates = Jinja2Templates(directory="/workspace/LLM-Emails/react-app/build")
+react_Templates = Jinja2Templates(directory="react-app/build")
 
 #get apikey
 api_key = os.getenv("API_KEY")
 openai.api_key = api_key
 
-
-@app.get("/", response_class=HTMLResponse)
-async def read_index(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
-
-@app.get("/prospects")
+@app.get("/")
 async def show_Prospects(request: Request):
     return react_Templates.TemplateResponse("index.html", {"request": request})
 
-@app.post("/prospects")
+@app.post("/")
 async def fetch_Prospects(request: Request, filters: dict):
     sample_Companies = [
         ['google', 'Google', 'Mountain View, California', 10001, 80000, 'past1Month', ['Series A'], 10000000, 800000000], 
@@ -52,7 +47,11 @@ async def fetch_Prospects(request: Request, filters: dict):
     return JSONResponse(content = {'companies': company_Df.to_dict(orient = 'records'), 'employees': []})
 
 
-@app.post("/")
+@app.get("/generate", response_class=HTMLResponse)
+async def read_index(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
+@app.post("/generate")
 async def generate_text(data: dict):
     source = data.get("source")
     target = data.get("destination")
