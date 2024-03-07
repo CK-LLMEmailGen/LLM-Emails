@@ -61,7 +61,7 @@ class EmailGenFromGemini():
             genai.configure(api_key)
             # models_list = genai.list_models()
         except Exception as e:
-            print(e)
+            # print(e)
             print("API_KEY is wrong/expired!!")
 
 
@@ -124,6 +124,8 @@ class EmailGenFromGemini():
             Start the conversation in the email in a personalized way by talking about the Target Person,\
             their experiences, achievements, university education, interests and other.\
             But only stick to the data provided, do not consider any external data or hallucinate.\
+            Do not give any hyperlinks/text regarding the source or target company/person that isn't present in the given context.\
+            Do not include more than 25-30 words in one line and give bulletpoints wherever necessary.\
             Now, refer to the Target Person's data provided earlier and then introduce the services of Source Company's product."
 
         email_gen_prompt = f"You are provided with Target Person data\n\n: {target_person} \n\n\n\n\n You are also provided with the Target Company data:\n\n {target_company}\n\n\n\n\n.\
@@ -132,6 +134,8 @@ class EmailGenFromGemini():
             Start the conversation in the email in a personalized way by talking about the Target Person,\
             their experiences, achievements, university education, interests and other.\
             But only stick to the data provided, do not consider any external data or hallucinate.\
+            Do not give any hyperlinks/text regarding the source or target company/person that isn't present in the given context.\
+            Do not include more than 25-30 words in one line and give bulletpoints wherever necessary.\
             Now, refer to the Target Person's data provided earlier and then introduce the services of Source Company's product."
 
         tone = ["Maintain a tone that is respectful,\
