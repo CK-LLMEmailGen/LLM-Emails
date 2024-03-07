@@ -58,4 +58,21 @@ async def upload_files(request: Request,
                  target_person_path = target_person_path)
     mail = mail_gen_instance.email_generation()
     print(mail)
-    return templates.TemplateResponse("index.html", {"request": request, "message":  "Files uploaded successfully","text":text})
+    html_response = f"<!DOCTYPE html>\
+    <html>\
+    <head>\
+    <style>\
+    body \
+    {{font-family: Arial, sans-serif;line-height: 1.6;}}\
+    </style>\
+    </head>\
+    <body>\
+    <h3>Generated Email</h3>\
+    <div>\
+    {mail['email']}\
+    </div>\
+    </body>\
+    </html>"
+    
+    print(mail['email'])
+    return templates.TemplateResponse("index.html", {"request": request, "message":  "Files uploaded successfully","text":mail['email']})
