@@ -2,5 +2,6 @@ fastapi
 uvicorn
 jinja2
 python-dotenv
-langchain==0.0.137
-openai==0.28
+google-generativeai
+pytz
+
