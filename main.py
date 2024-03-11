@@ -21,7 +21,7 @@ os.makedirs(target_person_folder, exist_ok=True)
 templates = Jinja2Templates(directory="templates")
 
 # Defining the variables for google-cloud
-key_path = "/workspace/gcp_service_account.json"
+key_path = "/workspace/LLM-Emails/gcp_service_account.json"
 project_id = "ck-eams"
 bucket_name = "email_gen_llm"
 upload_company_folder = "Company_Data/"
@@ -62,13 +62,14 @@ def change_file_name(filepath : str = None) -> None:
 
 
 # Function to check if upload file exists in cloud bucket or not:
-def check_file_exists(folder_name : str = None, file_name : str = None) -> bool:
+def check_file_exists(folder_name : str = None, file_path : str = None) -> bool:
+    file_name = file_path.split('/')[-1]
     bucket = storage_Client.get_bucket("email_gen_llm")
     blob = bucket.blob(f"{folder_name}{file_name}")
     if blob:
         return True
     return False
-
+    
 
 
 # Upload file to the bucket:
@@ -108,32 +109,46 @@ async def upload_files(request: Request,
     with open(target_person_path, "wb") as buffer:
         buffer.write(await targetPerson.read())
 
-    
-    
-    # # Now you can access the selected tone using the 'tone' variable
-    # print("Selected tone:", tone)
-    # text="Hi!!!!!!"
-    mail_gen_instance = EmailGenFromGemini(model_name = 'gemini-pro',
-                 source_path = product_path,
-                 target_company_path = target_company_path,
-                 target_person_path = target_person_path)
-    mail = mail_gen_instance.email_generation()
-    # print(mail)
-    html_response = f"<!DOCTYPE html>\
-    <html>\
-    <head>\
-    <style>\
-    body \
-    {{font-family: Arial, sans-serif;line-height: 1.6;}}\
-    </style>\
-    </head>\
-    <body>\
-    <h3>Generated Email</h3>\
-    <div>\
-    {mail['email']}\
-    </div>\
-    </body>\
-    </html>"
-    
-    # print(mail['email'])
-    return templates.TemplateResponse("index.html", {"request": request, "message":  "Files uploaded successfully","text":mail['email']})
+    if authenticate():
+
+        change_file_name(product_path)
+        change_file_name(target_company_path)
+        change_file_name(target_person_path)
+
+        if not check_file_exists(upload_company_folder, product_path):
+            upload_file(upload_company_folder, product_path)
+        
+        if not check_file_exists(upload_company_folder, target_company_path):
+            upload_file(upload_company_folder, target_company_path)
+
+        if not check_file_exists(upload_person_folder, target_person_path):
+            upload_file(upload_person_folder, target_person_path)
+        # # Now you can access the selected tone using the 'tone' variable
+        # print("Selected tone:", tone)
+        # text="Hi!!!!!!"
+        mail_gen_instance = EmailGenFromGemini(model_name = 'gemini-pro',
+                    source_path = product_path,
+                    target_company_path = target_company_path,
+                    target_person_path = target_person_path)
+        mail = mail_gen_instance.email_generation()
+        # print(mail)
+        html_response = f"<!DOCTYPE html>\
+        <html>\
+        <head>\
+        <style>\
+        body \
+        {{font-family: Arial, sans-serif;line-height: 1.6;}}\
+        </style>\
+        </head>\
+        <body>\
+        <h3>Generated Email</h3>\
+        <div>\
+        {mail['email']}\
+        </div>\
+        </body>\
+        </html>"
+        
+        # print(mail['email'])
+        return templates.TemplateResponse("index.html", {"request": request, "message":  "Files uploaded successfully", "text":mail['email']})
+
+    return templates.TemplateResponse("index.html", {"request": request, "message": "Error occurred!", "text": "Email is not generated."})
