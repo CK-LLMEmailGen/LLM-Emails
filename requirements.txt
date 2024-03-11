@@ -5,3 +5,4 @@ python-dotenv
 google-generativeai
 pytz
 python-multipart
+google-cloud-storage
