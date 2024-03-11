@@ -3,7 +3,10 @@ import dotenv
 import google.generativeai as genai
 import pytz
 import os
-import datetime
+from datetime import datetime
+
+
+
 class EmailGenFromGemini():
 
     def __init__(self, model_name = 'gemini-pro',
@@ -53,16 +56,9 @@ class EmailGenFromGemini():
 
     # Function to get the API Key of Gemini
     def get_gemini_api_key(self) -> None:
-        try:
-            dotenv.load_dotenv("/workspace/LLM-Emails/.env")
-            # self.GEMINI_API_KEY = getpass.getpass("Enter Gemini's API Key: ")
-            
-            api_key = os.getenv("API_KEY")
-            genai.configure(api_key)
-            # models_list = genai.list_models()
-        except Exception as e:
-            # print(e)
-            print("API_KEY is wrong/expired!!")
+        dotenv.load_dotenv("/workspace/LLM-Emails/.env")    
+        api_key = os.getenv("API_KEY")
+        genai.configure(api_key=api_key)
 
 
 
@@ -118,9 +114,9 @@ class EmailGenFromGemini():
         target_company = self.get_data_from_file(self.target_company_path)
         target_person = self.get_data_from_file(self.target_person_path)
 
-        original_prompt = "You are provided with Target Person data\n\n: {Target_Person} and Target Company data: {Target_Company}.\
-            You are also given Source Company's product data: {Source}.\
-            Your task is to generate an email describing how Source's product can be useful for the Target Company and the Target Company.\
+        original_prompt = "You are provided with 'Target Person' data and 'Target Company' data.\
+            You are also given ''Source Company's product'' data.\
+            Your task is to generate an email describing how Source's product can be useful for the Target Person and the Target Company.\
             Start the conversation in the email in a personalized way by talking about the Target Person,\
             their experiences, achievements, university education, interests and other.\
             But only stick to the data provided, do not consider any external data or hallucinate.\
@@ -128,9 +124,9 @@ class EmailGenFromGemini():
             Do not include more than 25-30 words in one line and give bulletpoints wherever necessary.\
             Now, refer to the Target Person's data provided earlier and then introduce the services of Source Company's product."
 
-        email_gen_prompt = f"You are provided with Target Person data\n\n: {target_person} \n\n\n\n\n You are also provided with the Target Company data:\n\n {target_company}\n\n\n\n\n.\
-            You are also given Source Company's product data:\n\n {source} \n\n\n\n\n.\
-            Your task is to generate an email describing how Source's product can be useful for the Target Company and the Target Company.\
+        email_gen_prompt = f"You are provided with 'Target Person' data\n\n: {target_person} \n\n\n\n\n You are also provided with the 'Target Company' data:\n\n {target_company}\n\n\n\n\n.\
+            You are also given ''Source Company's product'' data:\n\n {source} \n\n\n\n\n.\
+            Your task is to generate an email describing how Source's product can be useful for the Target Person and the Target Company.\
             Start the conversation in the email in a personalized way by talking about the Target Person,\
             their experiences, achievements, university education, interests and other.\
             But only stick to the data provided, do not consider any external data or hallucinate.\
@@ -146,7 +142,7 @@ class EmailGenFromGemini():
         in a light-hearted and engaging manner. The goal is to make the email feel friendly,\
         approachable, and maybe even a bit funny.\
         Describe how the Source Company's product can be benifitted for the Target Company in 15 - 20 lines.",
-        "The goal is to make the email feel friendly, approachable, and maybe even a bit funny. \
+        "The goal is to make the email feel friendly, approachable, and definitely funny. \
         Ensure the tone is semi-formal, maintaining respect while incorporating humor.\
         Keep the email short in 15 - 20 lines."]
 

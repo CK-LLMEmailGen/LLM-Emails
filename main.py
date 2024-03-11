@@ -98,7 +98,7 @@ async def upload_files(request: Request,
     product_path=os.path.join(product_description_folder, productDescription.filename)
     target_company_path=os.path.join(target_company_folder, targetCompany.filename)
     target_person_path=os.path.join(target_person_folder, targetPerson.filename)
-    print(product_path,target_company_path,target_person_path)
+    # print(product_path,target_company_path,target_person_path)
     # Save product description file
     with open(product_path, "wb") as buffer:
         buffer.write(await productDescription.read())
@@ -158,7 +158,7 @@ async def upload_files(request: Request,
         </body>\
         </html>"
         
-        # print(mail['email'])
+        print(mail['timestamp'])
         return templates.TemplateResponse("index.html", {"request": request, "message":  "Files uploaded successfully", "text":mail['email']})
 
     return templates.TemplateResponse("index.html", {"request": request, "message": "Error occurred!", "text": "Email is not generated."})
