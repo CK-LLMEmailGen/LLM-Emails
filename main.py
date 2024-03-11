@@ -51,7 +51,7 @@ def authenticate() -> bool:
 def change_file_name(filepath : str = None) -> str:
     original_file_path = filepath
     file_list = filepath.split('/')
-    file_list[-1] = file_list[-1].lower().replace(" ","_")
+    file_list[-1] = file_list[-1].replace(" ","_")
     result_path = ""
     for string in file_list:
         result_path += string
@@ -63,7 +63,7 @@ def change_file_name(filepath : str = None) -> str:
 
 
 # Function to check if upload file exists in cloud bucket or not:
-def check_file_exists(folder_name : str = None, file_path : str = None) -> bool:
+def check_exists(folder_name : str = None, file_path : str = None) -> bool:
     file_name = file_path.split('/')[-1]
     bucket = storage_Client.get_bucket("email_gen_llm")
     blobs = bucket.list_blobs(prefix = folder_name)
@@ -117,18 +117,25 @@ async def upload_files(request: Request,
         target_company_path = change_file_name(target_company_path)
         target_person_path = change_file_name(target_person_path)
 
-        if not check_file_exists(upload_company_folder, product_path):
+        if not check_exists(upload_company_folder, product_path):
             print(f"{product_path}doesn't exist")
             upload_file(upload_company_folder, product_path)
         
-        if not check_file_exists(upload_company_folder, target_company_path):
+        if not check_exists(upload_company_folder, target_company_path):
+            print(f"{target_company_path} doesn't exist")
             upload_file(upload_company_folder, target_company_path)
 
-        if not check_file_exists(upload_person_folder, target_person_path):
-            upload_file(upload_person_folder, target_person_path)
+        if not check_exists(upload_person_folder, target_company_path):
+            folder_name = target_company_path.split('/')[-1].split('.')[0]
+            bucket = storage_Client.get_bucket(bucket_name)
+            blob = bucket.blob(f"{upload_person_folder}{folder_name}/")
+            blob.upload_from_string('')
+            upload_file(f"{upload_person_folder}{folder_name}/", target_person_path)
+
         # # Now you can access the selected tone using the 'tone' variable
         # print("Selected tone:", tone)
         # text="Hi!!!!!!"
+
         mail_gen_instance = EmailGenFromGemini(model_name = 'gemini-pro',
                     source_path = product_path,
                     target_company_path = target_company_path,
