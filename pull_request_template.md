@@ -10,7 +10,4 @@
 
 - [ ] I have read the [Contributing Guidelines](./CONTRIBUTING.md)
 - [ ] I have forked the repo.
-- [ ] I have made a new branch and made changes to that branch.
-- [ ] I first opened an issue and linked it here.
-- [ ] My PR closes the issue.
 - [ ] There are no merge conflicts.

@@ -1,8 +1,9 @@
+pytz
+jinja2
 fastapi
 uvicorn
-jinja2
+datetime
 python-dotenv
-google-generativeai
-pytz
 python-multipart
+google-generativeai
 google-cloud-storage
