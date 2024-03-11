@@ -48,7 +48,7 @@ def authenticate() -> bool:
 
 
 # change_file_name
-def change_file_name(filepath : str = None) -> None:
+def change_file_name(filepath : str = None) -> str:
     original_file_path = filepath
     file_list = filepath.split('/')
     file_list[-1] = file_list[-1].lower().replace(" ","_")
@@ -58,6 +58,7 @@ def change_file_name(filepath : str = None) -> None:
         result_path += "/"
     result_path = result_path[0:-1]
     os.rename(original_file_path,result_path)
+    return result_path
 
 
 
@@ -65,7 +66,8 @@ def change_file_name(filepath : str = None) -> None:
 def check_file_exists(folder_name : str = None, file_path : str = None) -> bool:
     file_name = file_path.split('/')[-1]
     bucket = storage_Client.get_bucket("email_gen_llm")
-    blob = bucket.blob(f"{folder_name}{file_name}")
+    blobs = bucket.list_blobs(prefix = folder_name)
+    blob = any(blob.name == f"{folder_name}{file_name}" for blob in blobs)
     if blob:
         return True
     return False
@@ -111,11 +113,12 @@ async def upload_files(request: Request,
 
     if authenticate():
 
-        change_file_name(product_path)
-        change_file_name(target_company_path)
-        change_file_name(target_person_path)
+        product_path = change_file_name(product_path)
+        target_company_path = change_file_name(target_company_path)
+        target_person_path = change_file_name(target_person_path)
 
         if not check_file_exists(upload_company_folder, product_path):
+            print(f"{product_path}doesn't exist")
             upload_file(upload_company_folder, product_path)
         
         if not check_file_exists(upload_company_folder, target_company_path):
