@@ -1,142 +1,157 @@
-from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
-from langchain.document_loaders import TextLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-import openai
 import os
 from dotenv import load_dotenv
-from my_lib import wrap_text
-from fastapi.responses import Response
-
-load_dotenv()
-# Create an instance of the FastAPI class
+from mail_gen import EmailGenFromGemini 
+from google.cloud import storage
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+from fastapi import FastAPI, File, UploadFile, Request, Form
 app = FastAPI()
 
-# app.mount("/static", StaticFiles(directory="static"), name="static")
+# Define folder paths
+product_description_folder = "uploads/product_description/"
+target_company_folder = "uploads/target/target_company/"
+target_person_folder = "uploads/target/target_person/"
 
-# Initialize Jinja2Templates
+# Ensure upload folders exist
+os.makedirs(product_description_folder, exist_ok=True)
+os.makedirs(target_company_folder, exist_ok=True)
+os.makedirs(target_person_folder, exist_ok=True)
+
+# Initialize templates
 templates = Jinja2Templates(directory="templates")
 
-#get apikey
-api_key = os.getenv("API_KEY")
-openai.api_key = api_key
+# Defining the variables for google-cloud
+key_path = "/workspace/LLM-Emails/gcp_service_account.json"
+project_id = "ck-eams"
+bucket_name = "email_gen_llm"
+upload_company_folder = "Company_Data/"
+upload_person_folder = "Person_Data/"
+storage_Client = storage.Client.from_service_account_json(key_path)
+
+
+
+# Checking if the service account is correctly authenticated or not
+def authenticate() -> bool:
+    try:
+        temp_project_id = storage_Client.project
+        return temp_project_id == project_id
+    except Exception(e):
+        print(f"Exception:\n{e}")
+        return False
+
+
+
+# # get_file_name
+# def get_file_name(filepath : str = None) -> str:
+#     return filepath.split('/')[-1]
+
+
+
+# change_file_name
+def change_file_name(filepath : str = None) -> str:
+    original_file_path = filepath
+    file_list = filepath.split('/')
+    file_list[-1] = file_list[-1].lower().replace(" ","_")
+    result_path = ""
+    for string in file_list:
+        result_path += string
+        result_path += "/"
+    result_path = result_path[0:-1]
+    os.rename(original_file_path,result_path)
+    return result_path
+
+
+
+# Function to check if upload file exists in cloud bucket or not:
+def check_file_exists(folder_name : str = None, file_path : str = None) -> bool:
+    file_name = file_path.split('/')[-1]
+    bucket = storage_Client.get_bucket("email_gen_llm")
+    blobs = bucket.list_blobs(prefix = folder_name)
+    blob = any(blob.name == f"{folder_name}{file_name}" for blob in blobs)
+    if blob:
+        return True
+    return False
+    
+
+
+# Upload file to the bucket:
+def upload_file(folder_name : str = None, file_path : str = None):
+    file_name = file_path.split('/')[-1]
+    bucket = storage_Client.get_bucket("email_gen_llm")
+    blob = bucket.blob(f"{folder_name}{file_name}")
+    blob.upload_from_filename(file_path)
+
 
 
 @app.get("/", response_class=HTMLResponse)
-async def read_index(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
-
+async def home(request: Request, message: str = None):
+    return templates.TemplateResponse("index.html", {"request": request, "message": message})
 
 
 @app.post("/")
-async def generate_text(data: dict):
-    source = data.get("source")
-    target = data.get("destination")
-    target_person = data.get("target")
-    prompt = data.get("prompt")
-    tone=data.get("tone")
+async def upload_files(request: Request,
+                       productDescription: UploadFile = File(...),
+                       targetCompany: UploadFile = File(...),
+                       targetPerson: UploadFile = File(...),
+                       tone: str = Form(...)):
 
+    product_path=os.path.join(product_description_folder, productDescription.filename)
+    target_company_path=os.path.join(target_company_folder, targetCompany.filename)
+    target_person_path=os.path.join(target_person_folder, targetPerson.filename)
+    print(product_path,target_company_path,target_person_path)
+    # Save product description file
+    with open(product_path, "wb") as buffer:
+        buffer.write(await productDescription.read())
     
-
-    # Use the received values as needed, for example:
-    document_files = [source+".txt",target+".txt",target_person+".txt"]
-    all_documents=[]
-    # Load multiple documents
-    for file_path in document_files:
-        loader = TextLoader(file_path)
-        documents = loader.load()
-        all_documents.extend(documents)
-
-    # Split the combined documents into chunks
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
-    docs = text_splitter.split_documents(all_documents)
+    # Save target company file
+    with open(target_company_path, "wb") as buffer:
+        buffer.write(await targetCompany.read())
     
-    # Assuming you've obtained information and answers from the PDFs
-    pdf_information = {
-        "Source": all_documents[0],
-        "target": all_documents[1],
-        "target_person":all_documents[2]
+    # Save target person file
+    with open(target_person_path, "wb") as buffer:
+        buffer.write(await targetPerson.read())
+
+    if authenticate():
+
+        product_path = change_file_name(product_path)
+        target_company_path = change_file_name(target_company_path)
+        target_person_path = change_file_name(target_person_path)
+
+        if not check_file_exists(upload_company_folder, product_path):
+            print(f"{product_path}doesn't exist")
+            upload_file(upload_company_folder, product_path)
         
-        # Add more information retrieved from PDFs
-    }
-    
+        if not check_file_exists(upload_company_folder, target_company_path):
+            upload_file(upload_company_folder, target_company_path)
 
-    # default_prompt=f'Generate an personalized email in about 200-250 words saying that how .\
-    #         The information regarding the source and destination are obtained from text files and \
-    #         stored as follows{pdf_information}.Utilize this information and provide me an \
-    #         appropriate mail in a short and sweet manner saying that how the source services are helpful to destination platform.\
-    #         By reading the mail you have generated, the reader should show willingness to use the services.The email should always be \
-    #         written from the source to the destination explaining how services offered by source company is useful for the destination company\
-    #         and the recipient is {target}.The source and the destination are given in {pdf_information}.The specifications on how the mail \
-    #         should be are given in {prompt}.Include these requirements/specifications while generating your response'
+        if not check_file_exists(upload_person_folder, target_person_path):
+            upload_file(upload_person_folder, target_person_path)
+        # # Now you can access the selected tone using the 'tone' variable
+        # print("Selected tone:", tone)
+        # text="Hi!!!!!!"
+        mail_gen_instance = EmailGenFromGemini(model_name = 'gemini-pro',
+                    source_path = product_path,
+                    target_company_path = target_company_path,
+                    target_person_path = target_person_path)
+        mail = mail_gen_instance.email_generation()
+        # print(mail)
+        html_response = f"<!DOCTYPE html>\
+        <html>\
+        <head>\
+        <style>\
+        body \
+        {{font-family: Arial, sans-serif;line-height: 1.6;}}\
+        </style>\
+        </head>\
+        <body>\
+        <h3>Generated Email</h3>\
+        <div>\
+        {mail['email']}\
+        </div>\
+        </body>\
+        </html>"
+        
+        # print(mail['email'])
+        return templates.TemplateResponse("index.html", {"request": request, "message":  "Files uploaded successfully", "text":mail['email']})
 
-    default_prompt=f"Find {source} mail address and {target_person} mail address from {pdf_information}.\
-        From {source} mail address, send a personalized mail to {target_person} mail address in about 200-250 words\
-        saying that how {source} services can be useful for {target}.Do not include content related to {source} in the \
-        email subject.Start the email subject with topic related to {target_person} and praising {target} for its services. \
-        The information regarding the {source} ,{target} and {target_person} are obtained from text files and \
-        stored as follows{pdf_information}.use the {target_person} information while generating your response and provide me an \
-        appropriate mail saying that how the {source} services are useful to {target}\
-        and the response should be short and sweet.By reading the mail you have generated, \
-        the reader should show willingness to use the services.Start the email as if you are talking to the {target_person}\
-        and include their information for example about their university or working experiences or any other information \
-        available at {pdf_information['target_person'] }.Add additional information about their information for example \
-        the places or any experiences with their universityand then start saying about how the{source} services are useful for \
-        the {target}.T"
-    
-    email_content=generate_email(default_prompt)
-    changed_tone=changeTone(email_content,tone)
-    formatted_email_content = email_content.replace("\n", "<br>")  # Replace newlines with HTML line breaks
-    
-    # Construct HTML response to display formatted email content
-    html_response = f"<!DOCTYPE html>\
-    <html>\
-    <head>\
-    <style>\
-    body \
-    {{font-family: Arial, sans-serif;line-height: 1.6;}}\
-    </style>\
-    </head>\
-    <body>\
-    <h3>Generated Email</h3>\
-    <div>\
-    {formatted_email_content}\
-    </div>\
-    </body>\
-    </html>"
-    
-    return html_response
-    
-    
-
-
-def generate_email(prompt):
-  response = openai.ChatCompletion.create(
-      model="gpt-4-1106-preview", temperature=1,
-      messages=[
-          {
-              "role": "system",
-              "content": prompt
-          }
-      ],
-      max_tokens=500 # Adjust the desired length of the email generated
-  )
-
-  # Get the generated email text
-  generated_email = response['choices'][0]['message']['content']
-  
-  return (generated_email)
-
-
-def changeTone(info,tone):
-    prompt1=f"Identify the tone of the{info} and classify it whether it is formal or semi formal or informal.\
-    Just give me the answer only do not give any reasons or description"
-    print(generate_email(prompt1))
-    prompt=f"Change the {info} into the tone specified here {tone}"
-    toned_mail = generate_email(prompt)
-    prompt2=f"what is the tone of {toned_mail}.Is it formal or informal or semi formal\
-    Just give me the answer only do not give any reasons or description"
-    print(generate_email(prompt2))
-    return toned_mail
+    return templates.TemplateResponse("index.html", {"request": request, "message": "Error occurred!", "text": "Email is not generated."})

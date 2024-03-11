@@ -1,115 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Mail Generation</title>
-    <style>
-        div{
-                margin-left: 20%;
-                margin-right: 20%;
-                /* Add more styles as needed */
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Upload Files</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+    input[type="file"] {
+        margin-bottom: 10px;
+    }
+    input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+</style>
+<script>
+    function validateForm() {
+        var radios = document.getElementsByName("tone");
+        var formValid = false;
+    
+        for (var i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+                formValid = true;
+                break;
             }
-    </style>
+        }
+    
+        if (!formValid) {
+            alert("Please select a tone.");
+            return false;
+        }
+    
+        return true;
+    }
+    </script>
 </head>
 <body>
+
+<div class="container">
+    <h2>Upload Files</h2>
     
+    <form method="post" enctype="multipart/form-data">
+        <label for="productDescription">Product Description &nbsp;&nbsp;:</label>
+        <input type="file" name="productDescription" required>
+        <small>upload product details file</small><br><br>
+        <label for="targetCompany">Target Company&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;:</label>
+        <input type="file" name="targetCompany" required>
+        <small>upload taget company details</small><br><br>
+        
+        <label for="targetPerson">Target Person&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label>
+        <input type="file" name="targetPerson" required>
+        <small>upload target person details</small><br><br>
+        
+        <label for="tone">Select Tone:</label><br>
+        <input type="radio" id="formal" name="tone" value="formal" required>
+        <label for="formal">Formal</label><br>
+        
+        <input type="radio" id="semiFormal" name="tone" value="semi-formal" required>
+        <label for="semiFormal">Semi-Formal</label><br>
+        
+        <input type="radio" id="jovial" name="tone" value="jovial" required>
+        <label for="jovial">Jovial</label><br><br>
 
-    <h1>Mail Generation</h1>
-    <form id="textForm">
-        <label for="source">Source Name:</label>
-        <select id="source" name="source">
-            <option value="mondee">Mondee</option>
-            <option value="crowdstrike">CrowdStrike</option>
-            <option value="Option 3">Option 3</option>
-            <!-- Add more options as needed -->
-        </select><br><br>
-        
-        <label for="destination">Destination:</label>
-        <select id="destination" name="destination">
-            <option value="crowdstrike">CrowdStrike</option>
-            <option value="mondee">Mondee</option>
-            <option value="Option 3">Option 3</option>
-            <!-- Add more options as needed -->
-        </select><br><br>
-        
-        <label for="target">Target Name:</label>
-        <input type="text" id="target" name="target"><br><br>
-        
-        <label for="prompt">Enter Prompt:</label>
-        <input type="text" id="prompt" name="prompt"><br><br>
-        <label for="tone">Tone:</label>
-        <select id="tone" name="tone">
-            <option value="formal">Formal</option>
-            <option value="semi_formal">Semi-Formal</option>
-            <option value="informal">Informal</option>
-            
-        </select><br><br>
-        
-        <button type="button" onclick="generateText()">Generate</button>
-        
+        <input type="submit" value="Upload Files">
     </form>
-    <br>
-    <div id="output"></div>
-   
-    <!-- <script>
-    async function generateText() {
-        const source = document.getElementById("source").value;
-        const destination = document.getElementById("destination").value;
-        const target = document.getElementById("target").value;
-        const promptText = document.getElementById("prompt").value;
-
-        // Make an API call to the FastAPI backend with selected values
-        fetch('/generate', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                source: source,
-                destination: destination,
-                target: target,
-                prompt: promptText
-            })
-        });
-        
-    const responseData = await response.text();
-    document.getElementById('output').innerHTML = responseData;
-    }
-</script> -->
-<script>
-    async function generateText() {
-        const source = document.getElementById("source").value;
-        const destination = document.getElementById("destination").value;
-        const target = document.getElementById("target").value;
-        const promptText = document.getElementById("prompt").value;
-
-        try {
-            const response = await fetch('/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    source: source,
-                    destination: destination,
-                    target: target,
-                    prompt: promptText
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-            let responseData = await response.text();
-            console.log(responseData);
-            responseData.replace(/"/g, ' ');
-            document.getElementById('output').innerHTML = responseData; // Display the response in the output div
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    }
-</script>
+    {% if text %}
+    <div id="message-container" style="border: 1px solid #ccc; padding: 10px; overflow: auto;">
+        <pre style="white-space: pre-wrap; word-wrap: break-word;">{{ text }}</pre>
+    </div>
+    {% endif %}
+    
+</div>
 
 </body>
 </html>

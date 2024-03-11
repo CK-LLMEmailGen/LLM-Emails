@@ -1,0 +1,40 @@
+Name:
+
+Jennifer (JJ) Johnson
+
+
+Location:
+
+New York, New York, United States
+
+
+Headline:
+
+Chief Marketing Officer at CrowdStrike
+
+
+Work_Preference:
+
+None
+
+
+Contact_Details:
+
+{'Jennifer’s Profile': 'https://www.linkedin.com/in/jjcmo'}
+
+
+About:
+
+Jennifer Johnson, aka JJ, has a 20-year track record in enterprise software, with expertise in cybersecurity and IT operations management. She has been a CMO for more than a decade, leading global marketing strategy and execution, and building high performance teams for some of the fastest growing and most trusted brands in cybersecurity. Leveraging her positioning and category design expertise, Johnson has helped multiple companies create bold and differentiated narratives, ‘super size’ their market positioning to help accelerate growth, create the narrative for successful public offerings, and build categories now tracked by Gartner. JJ is honored to join CrowdStrike as its CMO, one of the most iconic brands in cybersecurity and the second fastest company ever to hit the $2 billion ARR milestone, to build on and help power the company’s record growth trajectory.
+
+
+Experiences:
+
+['Chief Marketing Officer\nCrowdStrike · Full-time\nSep 2022 - Present · 1 yr 7 mos\n', 'Board Member\nImmersive Labs\nNov 2021 - Present · 2 yrs 5 mos\nThe leader in Cyber Workforce Resilience.\n', 'Illumio\n1 yr 11 mos\nChief Marketing Officer\nFull-time\nFeb 2022 - Sep 2022 · 8 mos\nSunnyvale, California, United States\nIllumio is the Zero Trust Segmentation company. Led marketing strategy and execution. Centralized and led the Global Marketing and Sales Development teams to accelerate pipeline development.\nBoard Member\nNov 2020 - Feb 2022 · 1 yr 4 mos\nSan Francisco Bay Area\nJoined the Illumio management team as Chief Marketing Officer in February 2022.\n', 'Chief Marketing & Strategy Officer\nAmplitude · Full-time\nOct 2020 - Feb 2022 · 1 yr 5 mos\nNasdaq: AMPL. Led global marketing strategy and execution. Part of the executive team that led Amplitude through a successful direct listing in September 2021.\n', 'Chief Marketing Officer\nTenable\nFeb 2017 - Sep 2020 · 3 yrs 8 mos\nSan Francisco Bay Area\nNasdaq: TENB. Led the ground-up transformation of the global marketing organization and re-positioned Tenable from IT-centric VM to Cyber Exposure Management and Risk. Exposure Management is now a market tracked by Gartner. Part of the executive team that took Tenable through a successful Initial Public Offering in July 2018.\n', 'Category Designer in Residence\nPlay Bigger\nSep 2016 - Feb 2017 · 6 mos\nSan Francisco Bay Area\nWorked with the Play Bigger team, former CMOs who wrote the book on category design, on category design engagements and now serve as an industry thought leader and speaker on the topic.\n', 'Chief Marketing Officer\nTanium\nNov 2014 - Aug 2016 · 1 yr 10 mos\nSan Francisco Bay Area\nFirst-ever CMO. Brought in to build the marketing organization from the ground up. Defined company narrative and point of view, creating one of the hottest brands in cybersecurity at the time. Led marketing through consecutive years of triple digit hypergrowth.\n', 'Partner\nAndreessen Horowitz\nJan 2014 - Nov 2014 · 11 mos\nSan Francisco Bay Area\nCounseled portfolio companies on go-to-market strategy and marketing best practices. Connected portfolio companies with Global 2000 CIOs and CMOs to educate the market on the software companies leading the next wave of innovation. Left to join Tanium as its first CMO, one of its largest enterprise investments at the time.\n', 'Chief Marketing Officer\nCoverity\nJul 2009 - Jan 2014 · 4 yrs 7 mos\nSan Francisco Bay Area\nLed global marketing strategy and execution up through its acquisition by Synopsys in early 2014.\n', "Senior Manager, Product Marketing\nHP Software (formerly Mercury Interactive)\nMar 2006 - Jul 2009 · 3 yrs 5 mos\nSan Francisco Bay Area\nLed the product marketing team and go-to-market strategy for HP Software's IT process automation and IT change management product lines, two of HP Software’s fastest growing product lines with consecutive years of triple digit growth. At Mercury Interactive, responsible for campaign strategy and execution of Application Management and IT Service Management solutions.\n", 'Senior Solutions Marketing Manager\nSymantec (formerly VERITAS Software)\nJun 2003 - Mar 2006 · 2 yrs 10 mos\nSan Francisco Bay Area\nResponsible for regulatory compliance solutions marketing. Marketing Executive Mentor Program participant (10 people selected out of 500 to participate).\n', 'Solutions Marketing Manager\nVERITAS Software (now Symantec)\nJun 2003 - Jul 2004 · 1 yr 2 mos\n', 'Sales and Marketing\nBN.com\nAug 1999 - Jun 2002 · 2 yrs 11 mos\n', 'Senior Consultant\nTriage Consulting Group\nJun 1996 - Aug 1999 · 3 yrs 3 mos\n']
+
+
+Education:
+
+['Santa Clara University\nMBA, Master of Business Administration\n2002 - 2004\n', 'University of San Francisco\nBSBA, Marketing Major, Psychology Minor\n1992 - 1996\n']
+
+
