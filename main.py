@@ -41,12 +41,6 @@ def authenticate() -> bool:
 
 
 
-# # get_file_name
-# def get_file_name(filepath : str = None) -> str:
-#     return filepath.split('/')[-1]
-
-
-
 # change_file_name
 def change_file_name(filepath : str = None) -> str:
     original_file_path = filepath
@@ -95,36 +89,32 @@ async def upload_files(request: Request,
                        targetPerson: UploadFile = File(...),
                        tone: str = Form(...)):
 
-    product_path=os.path.join(product_description_folder, productDescription.filename)
-    target_company_path=os.path.join(target_company_folder, targetCompany.filename)
-    target_person_path=os.path.join(target_person_folder, targetPerson.filename)
-    # print(product_path,target_company_path,target_person_path)
-    # Save product description file
-    with open(product_path, "wb") as buffer:
-        buffer.write(await productDescription.read())
-    
-    # Save target company file
-    with open(target_company_path, "wb") as buffer:
-        buffer.write(await targetCompany.read())
-    
-    # Save target person file
-    with open(target_person_path, "wb") as buffer:
-        buffer.write(await targetPerson.read())
+    product_path = os.path.join(product_description_folder, productDescription.filename)
+    target_company_path = os.path.join(target_company_folder, targetCompany.filename)
+    target_person_path = os.path.join(target_person_folder, targetPerson.filename)
 
+    # List of filepaths and fileobjects
+    path_list = [product_path, target_company_path, target_person_path]
+    object_list = [productDescription, targetCompany, targetPerson]
+
+    # Storing the uploaded files in their respective folders.
+    for i in range(3):
+        with open(path_list[i], "wb") as buffer:
+            buffer.write(await object_list[i].read())
+
+    # Authenticating for gcp bucket
     if authenticate():
+        # Uploading the target and source company's description
+        for i in range(2):
+            path_list[i] = change_file_name(path_list[i])
+            if not check_exists(upload_company_folder, path_list[i]):
+                print(f"{path_list[i]} doesn't exist.")
+                upload_file(upload_company_folder, path_list[i])
+            else:
+                print(f"{path_list[i]} already exists")
 
-        product_path = change_file_name(product_path)
-        target_company_path = change_file_name(target_company_path)
-        target_person_path = change_file_name(target_person_path)
-
-        if not check_exists(upload_company_folder, product_path):
-            print(f"{product_path}doesn't exist")
-            upload_file(upload_company_folder, product_path)
-        
-        if not check_exists(upload_company_folder, target_company_path):
-            print(f"{target_company_path} doesn't exist")
-            upload_file(upload_company_folder, target_company_path)
-
+        # Uploading the target person's description
+        path_list[2] = change_file_name(path_list[2])
         if not check_exists(upload_person_folder, target_company_path):
             folder_name = target_company_path.split('/')[-1].split('.')[0]
             bucket = storage_Client.get_bucket(bucket_name)
@@ -132,10 +122,7 @@ async def upload_files(request: Request,
             blob.upload_from_string('')
             upload_file(f"{upload_person_folder}{folder_name}/", target_person_path)
 
-        # # Now you can access the selected tone using the 'tone' variable
-        # print("Selected tone:", tone)
-        # text="Hi!!!!!!"
-
+        # Generating the mail
         mail_gen_instance = EmailGenFromGemini(model_name = 'gemini-pro',
                     source_path = product_path,
                     target_company_path = target_company_path,
