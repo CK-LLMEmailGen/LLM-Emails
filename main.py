@@ -129,6 +129,7 @@ async def upload_files(request: Request,
                     target_person_path = target_person_path)
         mail = mail_gen_instance.email_generation()
         # print(mail)
+        
         html_response = f"<!DOCTYPE html>\
         <html>\
         <head>\
