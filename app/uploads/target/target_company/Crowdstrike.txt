@@ -1,0 +1,115 @@
+Home_Page_Context
+
+Unstoppable Innovations from CrowdStrike Fal.Con 2023 CrowdCast Series. Get in the Know! Register now
+The world's leading AI-native
+cybersecurity platform
+CrowdStrike delivers a unified platform approach to modern security so you can protect and build your future.
+“All of us see that we have to work together. It’s the only way that we are going to combat the advanced threat actors out there.”
+That’s the average time it takes an adversary to land and move laterally through your network. When your data, reputation, and revenue are at stake, trust the pioneer in adversary intelligence.
+CrowdStrike is continually recognized as a leader by 3rd party organizations and customers. Learn more at crowdstrike.com/leader.
+1 Customer expectations are based on calculations made by CrowdStrike with data provided by customers or prospective customers who conduct a Business Value Realized or Business Value Assessment. Average savings are from the Total Economic Impact™ of CrowdStrike Falcon Complete, commissioned by CrowdStrike, February 2021. Results are for a composite organization as stated in the study. Individual results may vary by customer.
+2 Gartner, Magic Quadrant for Endpoint Protection Platforms, Peter Firstbrook, Chris Silva, 31 December 2022.
+Gartner is a registered trademark and service mark and Magic Quadrant is a registered trademark of Gartner, Inc. and/or its affiliates in the U.S. and internationally and are used herein with permission. All rights reserved. This graphic was published by Gartner, Inc. as part of a larger research document and should be evaluated in the context of the entire document. The Gartner document is available upon request from CrowdStrike. Gartner does not endorse any vendor, product or service depicted in its research publications, and does not advise technology users to select only those vendors with the highest ratings or other designation. Gartner research publications consist of the opinions of Gartner research organization and should not be construed as statements of fact. Gartner disclaims all warranties, express or implied, with respect to this research, including any warranties of merchantability or fitness for a particular purpose.
+Total protection has never been easier. Take advantage of our free 15-day trial and explore the most popular solutions for your business:
+In order to provide you with the most relevant content and best browser experience, we use cookies to remember and store information about how you use our website. See how we use this information in our Privacy Notice and more information about cookies in our Cookie Notice.
+
+
+2015_Forbes_About_CrowdStrike_Context
+
+Company Ranked Among Top 100 High-Growth, Privately Held U.S. Companies
+Irvine, CA – February 6, 2015 – CrowdStrike Inc., a leading provider of next-generation endpoint protection, threat intelligence, and security services, today announced it has been included on Forbes magazine’s list of America’s Most Promising Companies for 2015. Forbes’ annual list recognizes the leading privately held, high-growth companies that boast the most compelling business models, the strongest management teams, and the most notable customers and investors.
+“It’s extremely gratifying to have Forbes recognize CrowdStrike’s success, not only for its phenomenal growth in the past year, but also for the unique value we’re providing to customers with our groundbreaking endpoint security and services,” said George Kurtz, CrowdStrike CEO and co-founder. “It’s really a reflection of the passion and dedication that the entire CrowdStrike team brings to fulfilling our corporate mission, which is to help protect some of the world’s largest organizations against today’s highly sophisticated adversaries and the destruction they can inflict.”
+The Forbes ranking highlights an exceptional 2014 for CrowdStrike, during which the company’s revenue grew by 142 percent and the customer base more than tripled. It also marks the start of an exciting 2015 during which the company will continue to expand the detection, prevention, and response capabilities of its core next-generation endpoint protection offering, CrowdStrike Falcon®.
+This distinction marks the latest in a series of awards recognizing CrowdStrike for its growth, innovation, and corporate momentum. In the past year, CrowdStrike was named one of the top cybersecurity innovators by Security Innovation Network (SINET), one of the hottest startups to watch in 2015 by Dark Reading, and was included in the MIT Technology Review’s prestigious list of the 50 Most Disruptive Companies.
+About CrowdStrike
+CrowdStrike™ is a leading provider of next-generation endpoint protection, threat intelligence, and services. CrowdStrike Falcon® enables customers to prevent damage from targeted attacks, detect and attribute advanced malware and adversary activity in real time, and effortlessly search all endpoints, reducing overall incident response time.
+CrowdStrike customers include some of the largest blue chip companies in the financial services, energy, oil & gas, telecommunications, retail, and technology sectors, along with some of the largest and most sophisticated government agencies worldwide.
+"To learn more, please visit http://www.crowdstrike.com.
+Follow us: The Adversary Manifesto | Twitter"
+You Don’t Have a Malware Problem. You Have an Adversary Problem.™
+Total protection has never been easier. Take advantage of our free 15-day trial and explore the most popular solutions for your business:
+
+
+Timeline
+
+{
+    "2012": {
+        "JULY": "LAUNCHED THREAT\nINTELLIGENCE MODULE"
+    },
+    "2013": {
+        "FEBRUARY": "NAMED TO MIT TECH REVIEW\n50 DISRUPTIVE COMPANIES LIST",
+        "JUNE": "LAUNCHED ENDPOINT DETECTION\nAND RESPONSE MODULE",
+        "AUGUST": "LAUNCHED MANAGED THREAT\nHUNTING MODULE"
+    },
+    "2015": {
+        "FEBRUARY": "NAMED TO FORBES MOST\nPROMISING COMPANIES LIST",
+        "AUGUST": "NAMED TECHNOLOGY PIONEER\nBY WORLD ECONOMIC FORUM"
+    },
+    "2016": {
+        "FEBRUARY": "LAUNCHED ELEVATE\nPARTNER PROGRAM",
+        "MARCH": "OPENED EMEA\nHEADQUARTERS",
+        "JUNE": "OPENED APJ\nHEADQUARTERS",
+        "AUGUST": "NAMED TO INC.\n500 | 5000 LIST",
+        "NOVEMBER": "WON CRN TECH INNOVATOR AWARD\nFOR BEST ENDPOINT SECURITY\nNAMED TO DELOITTE\nTECHNOLOGY FAST 500 LIST"
+    },
+    "2017": {
+        "JANUARY": "NAMED TO FORTUNE BEST\nWORKPLACES IN TECHNOLOGY LIST",
+        "FEBRUARY": "WON SC AWARD FOR BEST\nSECURITY COMPANY AND BEST\nBEHAVIOR ANALYTICS/ENTERPRISE\nTHREAT DETECTION\nPOSITIONED BY GARTNER AS\nVISIONARY IN MAGIC QUADRANT\nFOR ENDPOINT PROTECTION PLATFORMS\nLAUNCHED NEXT-GENERATION\nANTIVIRUS MODULE\nLAUNCHED IT HYGIENE MODULE",
+        "MARCH": "WON SANS INSTITUTE AWARD\nFOR BEST THREAT INTELLIGENCE",
+        "APRIL": "NAMED GLOBAL LEADER IN IDC\nMARKETSCAPE FOR ENDPOINT\nSPECIALIZED THREAT ANALYSIS\nAND PROTECTION\nOPENED LATAM\nHEADQUARTERS",
+        "MAY": "NAMED TO CNBC\nDISRUPTOR 50 LIST",
+        "JULY": "LAUNCHED MALWARE\nSEARCH MODULE\nNAMED TO FORBES\nCLOUD 100 LIST",
+        "OCTOBER": "NAMED TO FORTUNE BEST\nMEDIUM WORKPLACE LIST",
+        "NOVEMBER": "ESTABLISHED CROWDSTRIKE\nFOUNDATION\nLAUNCHED VULNERABILITY\nMANAGEMENT MODULE"
+    },
+    "2018": {
+        "JANUARY": "POSITIONED BY GARTNER AS\nVISIONARY IN MAGIC QUADRANT\nFOR ENDPOINT PROTECTION\nPLATFORMS",
+        "APRIL": "LAUNCHED MANAGED DETECTION\nAND RESPONSE MODULE\nWON SC AWARD FOR BEST\nSECURITY COMPANY AND BEST\nENTERPRISE SECURITY SOLUTION",
+        "MAY": "NAMED TO CNBC\nDISRUPTOR 50 LIST",
+        "JUNE": "WON SC AWARD EUROPE\nFOR BEST ENTERPRISE\nSECURITY SOLUTION\nNAMED A LEADER IN\nFORRESTER WAVE FOR\nENDPOINT SECURITY SUITES",
+        "JULY": "NAMED A LEADER IN\nFORRESTER WAVE FOR\nENDPOINT DETECTION\nAND RESPONSE",
+        "AUGUST": "LAUNCHED DEVICE\nCONTROL MODULE",
+        "SEPTEMBER": "RECEIVED FEDRAMP\nAUTHORIZATION\nRANKED #6 IN FORBES\nCLOUD 100 LIST",
+        "OCTOBER": "NAMED A LEADER IN\nIDC MARKETPLACE FOR\nU.S. INCIDENT READINESS,\nRESPONSE AND RESILIENCY\nSERVICES\nNAMED TO FORTUNE\nBEST 100 MEDIUM\nCOMPANIES TO WORK FOR LIST"
+    },
+    "2019": {
+        "FEBRUARY": "LAUNCHED THE CROWDSTRIKE STORE\nANNOUNCED GLOBAL PARTNERSHIP\nWITH MERCEDES-AMG PETRONAS\nFORMULA ONE TEAM",
+        "MARCH": "LAUNCHED EDR FOR MOBILE\nNAMED A LEADER IN\nFORRESTER WAVE REPORT\nFOR CYBERSECURITY INCIDENT\nRESPONSE SERVICES",
+        "JUNE": "CROWDSTRIKE BECOMES A\nPUBLICLY TRADED COMPANY (\u201cCRWD\u201d)",
+        "AUGUST": "LAUNCHED CROWDSCORE\nPOSITIONED BY GARTNER AS\nLEADER IN MAGIC QUADRANT\nFOR ENDPOINT PROTECTION\nPLATFORMS\nESTABLISHED FALCON FUND",
+        "SEPTEMBER": "NAMED BEST NEW ENDPOINT\nDETECTION AND RESPONSE SOLUTION\nIN SE LABS ANNUAL REPORT\nNAMED A LEADER IN\nFORRESTER WAVE FOR\nENDPOINT SECURITY SUITES",
+        "NOVEMBER": "LAUNCHED FIREWALL\nMANAGEMENT MODULE"
+    },
+    "2020": {
+        "FEBRUARY": "WON SC AWARD FOR\nBEST SECURITY COMPANY\nLAUNCHED CLOUD WORKLOAD\nPROTECTION MODULE\nLAUNCHED CROWDSTRIKE\nENDPOINT RECOVERY SERVICES",
+        "MARCH": "NAMED TO FORTUNE\nBEST WORKPLACE IN\nTECHNOLOGY LIST\nNAMED A LEADER IN\nFORRESTER WAVE FOR\nENTERPRISE DETECTION AND RESPONSE\nNAMED A LEADER IN\nFORRESTER WAVE FOR\nEXTERNAL THREAT\nINTELLIGENCE SERVICES",
+        "JULY": "NAMED FASTEST-GROWING\nENDPOINT SECURITY SOFTWARE\nVENDOR BY IDC",
+        "SEPTEMBER": "ACQUIRED PREEMPT SECURITY",
+        "OCTOBER": "LAUNCHED FORENSICS MODULE\nLAUNCHED ZERO TRUST\nASSESSMENT\nLAUNCHED CLOUD SECURITY\nPOSTURE MANAGEMENT MODULE\nLAUNCHED DIGITAL RISK\nPROTECTION MODULE"
+    },
+    "2021": {
+        "JANUARY": "EARNED PERFECT SCORE IN\nHUMAN RIGHTS CAMPAIGN\u2019S\nCORPORATE EQUALITY INDEX",
+        "FEBRUARY": "ACQUIRED HUMIO",
+        "MARCH": "NAMED A LEADER IN\nFORRESTER WAVE FOR\nMANAGED DETECTION AND RESPONSE\nNAMED A LEADER IN\nFORRESTER WAVE FOR\nEXTERNAL THREAT\nINTELLIGENCE SERVICES",
+        "APRIL": "NAMED TO FORTUNE\nBEST COMPANIES TO\nWORK FOR LIST",
+        "MAY": "LAUNCHED SECURITY\nORCHESTRATION, AUTOMATION\nAND RESPONSE FRAMEWORK\nWON SC AWARD FOR BEST\nCLOUD COMPUTING SECURITY\nSOLUTION AND BEST MANAGED\nSECURITY SERVICE\nPOSITIONED BY GARTNER AS\nLEADER IN MAGIC QUADRANT FOR\nENDPOINT PROTECTION PLATFORMS\nNAMED A LEADER IN\nFORRESTER WAVE: ENDPOINT\nSECURITY AS A SERVICE",
+        "JUNE": "RANKED #1 GLOBALLY BY IDC\nFOR MODERN ENDPOINT SECURITY\nMARKET SHARE",
+        "JULY": "LAUNCHED MANAGED THREAT\nINTELLIGENCE SERVICE",
+        "AUGUST": "NAMED U.S. LEADER IN\nIDC MARKETSPACE:\nMANAGED DETECTION\nAND RESPONSE",
+        "SEPTEMBER": "NAMED TO PEOPLE\nCOMPANIES THAT CARE LIST",
+        "OCTOBER": "LAUNCHED MANAGED CLOUD\nWORKLOAD PROTECTION SERVICE\nLAUNCHED CROWDXDR ALLIANCE\nLAUNCHED FILE INTEGRITY\nMONITORING MODULE",
+        "NOVEMBER": "NAMED BEST ENDPOINT\nDETECTION AND RESPONSE\nSOLUTION IN SE LABS\nANNUAL REPORT\nRANKED ON DELOITTE\nTECHNOLOGY FAST 500 LIST\nACQUIRED SECURECIRCLE\nNAMED TO INC. BEST-LED\nCOMPANIES IN AMERICA LIST\nNAMED A GLOBAL LEADER\nBY IDC IN MODERN ENDPOINT\nSECURITY FOR ENTERPRISE",
+        "DECEMBER": "RANKED #1 IN FORTUNE\nFUTURE 50 LIST\nNAMED WINNER FOR\nBEST CLOUD SECURITY\nTECHNOLOGY IN CRN\nPRODUCTS OF THE YEAR LIST"
+    },
+    "2022": {
+        "JANUARY": "RANKED #1 GLOBALLY BY\nIDC FOR MODERN ENDPOINT\nSECURITY MARKET SHARES\nLAUNCHED FALCON FUND II\nEARNED PERFECT SCORE IN\nHUMAN RIGHTS CAMPAIGN\u2019S\nCORPORATE EQUALITY INDEX",
+        "MARCH": "LAUNCHED MANAGED IDENTITY\nTHREAT PROTECTION SERVICE\nNAMED A LEADER IN\nFORRESTER WAVE FOR\nCYBERSECURITY INCIDENT\nRESPONSE SERVICES",
+        "APRIL": "SECURED IL-4 AUTHORIZATION\nTO PROTECT U.S. DEPARTMENT\nOF DEFENSE ASSETS\nNAMED TO FORTUNE 100\nBEST COMPANIES LIST\nINTRODUCED CLOUD NATIVE\nAPPLICATION PROTECTION\nPLATFORM (CNAPP) CAPABILITIES\nNAMED A LEADER IN\nFORRESTER WAVE FOR\nENDPOINT DETECTION\nAND RESPONSE",
+        "MAY": "RANKED #1 GLOBALLY BY\nGARTNER FOR MANAGED DETECTION\nRESPONSE MARKET SHARE",
+        "JUNE": "RANKED #1 GLOBALLY BY\nIDC FOR WORLDWIDE CORPORATE\nENDPOINT SECURITY MARKET SHARE\nLAUNCHED CENTRALIZED\nSTORAGE SOLUTION\nLAUNCHED CROWDSTRIKE\nASSET GRAPH\nWON SC AWARDS EUROPE\nFOR BEST EMERGING\nTECHNOLOGY AWARD (XDR)",
+        "JULY": "LAUNCHED CLOUD THREAT\nHUNTING SERVICE\nLAUNCHED SOFTWARE COMPOSITION\nANALYSIS (FOR CNAPP)",
+        "AUGUST": "LAUNCHED AI-POWERED\nINDICATORS OF ATTACK\nEARNED FROST & SULLIVAN\nGLOBAL TECHNOLOGY INNOVATION\nLEADERSHIP AWARD FOR\nENDPOINT SECURITY\nWON SC AWARD FOR\nBEST SECURITY COMPANY\nREACHED $2 BILLION\nARR MILESTONE",
+        "SEPTEMBER": "ACQUIRED REPOSIFY\nLAUNCHED CROWDSTRIKE POWERED\nSERVICE PROVIDER PROGRAM\nUNLOCKED XDR FOR ALL\nEDR CUSTOMERS\nLAUNCHED CLOUD\nINFRASTRUCTURE ENTITLEMENT\nMANAGEMENT (FOR CNAPP)\nLAUNCHED IT HYGIENE\nFOR IOT MODULE\nLAUNCHED OBSERVABILITY\nMODULE AND MANAGED\nOBSERVABILITY SERVICE\nNAMED TO FORTUNE\nBEST WORKPLACES FOR\nWOMEN LIST",
+        "NOVEMBER": "NAMED WINNER FOR 2022\nCRN TECH INNOVATOR AWARD\nFOR BEST CLOUD SECURITY"
+    }
+}
