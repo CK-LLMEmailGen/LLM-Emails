@@ -1,7 +1,4 @@
 **/__pycache__/
-*.env
-*.json
+/workspace/LLM-Emails/Secrets/
 /workspace/LLM-Emails/.gitpod.yml
-/workspace/LLM-Emails/uploads/
-
-
+/workspace/LLM-Emails/app/uploads/
