@@ -1,98 +1,376 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            height: 50px;
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        .sidebar {
+            width: calc(33.33% - 13.33px);
+            padding: 20px;
+            background-color: #7ddbe6;
+            margin-right: 20px;
+            margin-bottom: 20px;
+        }
+        .clear {
+            clear: both;
+        }
+        .input-fields {
+            display: none;
+            margin-top: 20px;
+        }
+        .input-fields label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .input-fields input[type="text"],
+        .input-fields input[type="file"] {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .input-fields input[type="file"] {
+            cursor: pointer;
+        }
+        .input-fields input[type="file"]::placeholder {
+            color: #999;
+        }
+        .input-fields input[type="file"]:focus {
+            outline: none;
+            border-color: #666;
+        }
+        .submit-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .submit-button:hover {
+            background-color: #45a049;
+        }
+        .flex-container {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="flex-container">
+            <div class="sidebar">
+                <h2 onclick="showInputFields()">Client Specifications</h2>
+                <p>This section contains client specifications.</p>
+            </div>
+            <div class="sidebar">
+                <h2>Filters</h2>
+                <p>This section contains filters.</p>
+            </div>
+            <div class="sidebar">
+                <h2>Mail</h2>
+                <p>This section contains mail.</p>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="container">
+        <form action="#" method="post" id="clientSpecificationsForm">
+            <div class="input-fields" id="inputFields">
+                <label for="senderName">Sender Name:</label>
+                <input type="text" id="senderName" name="senderName" placeholder="Enter sender name"><br>
+                <label for="productDescription">Product Description Text File:</label>
+                <input type="file" id="productDescription" name="productDescription" accept=".txt" placeholder="Upload product description text file"><br>
+                <label for="companyFile">Company Text File:</label>
+                <input type="file" id="companyFile" name="companyFile" accept=".txt" placeholder="Upload company text file"><br>
+                <button type="submit" class="submit-button">Submit</button>
+            </div>
+        </form>
+    </div>
+    <div class="container">
+        <h1>Welcome to My Website</h1>
+        <p>This is the content of my website. You can add more text, images, or any other elements here.</p>
+    </div>
+
+    <script>
+        function showInputFields() {
+            var inputFields = document.getElementById("inputFields");
+            if (inputFields.style.display === "none") {
+                inputFields.style.display = "block";
+            } else {
+                inputFields.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html> -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Upload Files</title>
-
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-    }
-    .container {
-        max-width: 1200px;
-        margin: 50px auto;
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        background-color: #f9f9f9;
-    }
-    input[type="file"] {
-        margin-bottom: 10px;
-    }
-    input[type="submit"] {
-        background-color: #4CAF50;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-    input[type="submit"]:hover {
-        background-color: #45a049;
-    }
-</style>
-<script>
-    function validateForm() {
-        var radios = document.getElementsByName("tone");
-        var formValid = false;
-    
-        for (var i = 0; i < radios.length; i++) {
-            if (radios[i].checked) {
-                formValid = true;
-                break;
-            }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
         }
-    
-        if (!formValid) {
-            alert("Please select a tone.");
-            return false;
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            height: 50px;
         }
-    
-        return true;
-    }
-    </script>
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            position: fixed;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+           
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 25px;
+           
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        .sidebar {
+            width: calc(33.33% - 13.33px);
+            
+            padding: 20px;
+            background-color: #7ddbe6;
+            margin-right: 2px;
+            margin-bottom: 20px;
+            border-radius: 5%;
+            text-align: center;
+            cursor:pointer;
+            
+        }
+        .clear {
+            clear: both;
+        }
+        .input-fields {
+            display: none;
+            margin-top: 20px;
+            background-color: #d8848a;
+            border-radius: 5px;
+            padding: 5px;
+        }
+        .input-fields label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            margin:10px;
+            margin-left:5%;
+        }
+        .input-fields input[type="text"],
+        .input-fields input[type="file"] {
+            width: calc(90% - 20px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #191717;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin:10px;
+            margin-left:5%;
+            background-color: #fff;
+        }
+        .input-fields input[type="file"] {
+            cursor: pointer;
+        }
+        .input-fields input[type="file"]::placeholder {
+            color: #efe9e9;
+        }
+        .input-fields input[type="file"]:focus {
+            outline: none;
+            border-color: rgb(32, 28, 28);
+        }
+        .submit-button {
+            background-color: #4d6872;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            height: 15%;
+        }
+        /* .submit-button:hover {
+            background-color: #45a049;
+        } */
+        .flex-container {
+            display: flex;
+            margin-top: 20px;
+            justify-content: space-between;
+        }
+        .tones-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .tone-column {
+            width: calc(33.33% - 13.33px);
+            padding: 10px;
+            background-color: #ec9b9b;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            text-align: center;
+        }
+        button{
+            margin-left:42.5%;
+            margin-bottom: 2%;
+            margin-top: 2%;
+        }
+    </style>
 </head>
 <body>
-
-<div class="container">
-    <h2>Upload Files</h2>
-    
-    <form method="post" enctype="multipart/form-data">
-        <label for="productDescription">Product Description &nbsp;&nbsp;:</label>
-        <input type="file" name="productDescription" required>
-        <small>upload product details file</small><br><br>
-        <label for="targetCompany">Target Company&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;:</label>
-        <input type="file" name="targetCompany" required>
-        <small>upload taget company details</small><br><br>
-        
-        <label for="targetPerson">Target Person&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label>
-        <input type="file" name="targetPerson" required>
-        <small>upload target person details</small><br><br>
-        
-        <label for="tone">Select Tone:</label><br>
-        <input type="radio" id="formal" name="tone" value="formal" required>
-        <label for="formal">Formal</label><br>
-        
-        <input type="radio" id="semiFormal" name="tone" value="semi-formal" required>
-        <label for="semiFormal">Semi-Formal</label><br>
-        
-        <input type="radio" id="jovial" name="tone" value="jovial" required>
-        <label for="jovial">Jovial</label><br><br>
-
-        <input type="submit" value="Upload Files">
-    </form>
-    {% if text %}
-    <div id="message-container" style="border: 1px solid #ccc; padding: 10px; overflow: auto;">
-        <pre style="white-space: pre-wrap; word-wrap: break-word;">{{ text }}</pre>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="flex-container">
+            <div class="sidebar" onclick="changeSidebarColor(this)">
+                <h3 onclick="showInputFields()">Client Specifications</h3>
+                
+            </div>
+            <div class="sidebar" onclick="changeSidebarColor(this)">
+                <h3>Filters</h3>
+                
+            </div>
+            <div class="sidebar" onclick="changeSidebarColor(this)">
+                <h3 onclick="showTones()">Mail</h3>
+            </div>
+        </div>
+        <div class="clear"></div>
     </div>
-    {% endif %}
-    
-</div>
+    <div class="container">
+        <form action="#" method="post" id="clientSpecificationsForm">
+            <div class="input-fields" id="inputFields">
+                <label for="senderName">Sender Name:</label>
+                <input type="text" id="senderName" name="senderName" placeholder="Enter sender name"><br>
+                <label for="productDescription">Product Description Text File:</label>
+                <input type="file" id="productDescription" name="productDescription" accept=".txt" placeholder="Upload product description text file"><br>
+                <label for="companyFile">Source Company Text File:</label>
+                <input type="file" id="companyFile" name="companyFile" accept=".txt" placeholder="Upload company text file"><br>
+                <button type="submit" class="submit-button">Submit</button>
+            </div>
+        </form>
+    </div>
+    <div class="container">
+        <div class="tones-container" style="display: none;" id="tonesContainer">
+            <div class="tone-column">
+                <h3>Formal</h3>
+            </div>
+            <div class="tone-column">
+                <h3>Semi-Formal</h3>
+                
+                
+            </div>
+            <div class="tone-column">
+                <h3>Informal</h3>
+                
+              
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function showInputFields() {
+            var inputFields = document.getElementById("inputFields");
+            if (inputFields.style.display === "none") {
+                tonesContainer.style.display = "none"
+                inputFields.style.display = "block";
+            } else {
+                inputFields.style.display = "none";
+            }
+        }
+        function showTones() {
+            var tonesContainer = document.getElementById("tonesContainer");
+            var inputFields = document.getElementById("inputFields");
+            if (tonesContainer.style.display === "none") {
+                
+             
+                inputFields.style.display = "none";
+                tonesContainer.style.display = "flex";
+                tonesContainer.style.flexDirection = "row";
+            } else {
+                tonesContainer.style.display = "none";
+            }
+        }
+
+
+        function changeSidebarColor(clickedElement) {
+        // Get all sidebar elements
+        var sidebars = document.querySelectorAll('.sidebar');
+
+        // Reset background color of all sidebars
+        sidebars.forEach(function(sidebar) {
+            sidebar.style.backgroundColor = '#7ddbe6'; // Reset to default color
+        });
+
+        // Change the background color of the clicked sidebar
+        clickedElement.style.backgroundColor = '#d8848a'; // Change to desired color
+    }
+</script>
 
 </body>
 </html>
+
