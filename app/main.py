@@ -119,12 +119,17 @@ async def upload_files(request: Request,
             blob = bucket.blob(f"{upload_person_folder}{folder_name}/")
             blob.upload_from_string('')
             upload_file(f"{upload_person_folder}{folder_name}/", file_path_list[2])
+        else:
+            print(f"{file_path_list[2]} already exists.")
 
         # Generating the mail
         mail_gen_instance = EmailGenFromGemini(model_name = 'gemini-pro',
                     source_path = file_path_list[0],
                     target_company_path = file_path_list[1],
-                    target_person_path = file_path_list[2])
+                    target_person_path = file_path_list[2],
+                    source_company = "Mondee",
+                    target_company = "Accenture",
+                    target_person = "Karan Gupta")
         mail_obj = mail_gen_instance.email_generation()
         # print(mail)
         print(type(mail_obj))
@@ -144,8 +149,9 @@ async def upload_files(request: Request,
         </div>\
         </body>\
         </html>"
-        #{mail_obj["email_chat"]["formal"]}
         print(mail_obj["email_chat"]["formal"])
+        print(mail_obj["email_chat"]["semi-formal"])
+        print(mail_obj["email_chat"]["jovial"])
         return templates.TemplateResponse("index.html", {"request": request, "message":  "Files uploaded successfully", "text":mail_obj["email_chat"]["formal"]})
 
     return templates.TemplateResponse("index.html", {"request": request, "message": "Error occurred!", "text": "Email is not generated."})

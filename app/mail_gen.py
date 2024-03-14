@@ -16,13 +16,15 @@ class EmailGenFromGemini():
                  target_company_path = None,
                  target_person_path = None,
                  source_person = "John Doe",
+                 source_person_designation = "Sales Executive",
                  source_company = None,
                  target_company = None,
                  target_person = None
                  ):
         self.model_name = model_name
         self.source_person = source_person
-        self.source_company= source_company
+        self.source_person_designation = source_person_designation
+        self.source_company = source_company
         self.target_person = target_person
         self.target_company = target_company
         self.source_path = source_path
@@ -32,11 +34,6 @@ class EmailGenFromGemini():
 
     # Declaring the tone to be used
     tone_list = [
-    '''Jovial:
-        Compose a friendly and upbeat email in a jovial tone. Use light-hearted language, incorporate positive greetings,
-        and perhaps share a relevant, industry-related joke or anecdote. Introduce your company's services in a casual,
-        engaging manner, and conclude the email with an invitation for further discussion or collaboration. Maintain an overall lively and friendly tone throughout.''',       
-        
     '''Formal:
         Craft a formal business email with a professional tone.
         Address the recipient with proper salutations, maintain a respectful language, and avoid overly informal expressions.
@@ -48,7 +45,12 @@ class EmailGenFromGemini():
         Address the recipient by name, express admiration for their achievements,
         and introduce your company's services in a straightforward yet approachable manner.
         Conclude the email with a courteous invitation for further discussion or collaboration,
-        maintaining a tone that is both respectful and personable.'''
+        maintaining a tone that is both respectful and personable.''',
+
+    '''Jovial:
+        Compose a friendly and upbeat email in a jovial tone. Use light-hearted language, incorporate positive greetings,
+        and perhaps share a relevant, industry-related joke or anecdote. Introduce your company's services in a casual,
+        engaging manner, and conclude the email with an invitation for further discussion or collaboration. Maintain an overall lively and friendly tone throughout.''',        
     ]
 
     # Original Prompt
@@ -209,13 +211,22 @@ class EmailGenFromGemini():
             actual_prompt =f'''
                 The data is given below in the form of HTML tags: every tag name describes its contents within its opening and closing tags.
                 You have to use the context given, to perform the task with the required specifications, using the given example.
-                <SENDER_NAME>
+                <SOURCE_PERSON_NAME>
                     {self.source_person}
-                </SENDER_NAME>
+                </SOURCE_PERSON_NAME>
+                <SOURCE_COMPANY_NAME>
+                    {self.source_company}
+                </SOURCE_COMPANY_NAME>
+                <TARGET_PERSON_NAME>
+                    {self.target_person}
+                </TARGET_PERSON_NAME>
+                <TARGET_COMPANY_NAME>
+                    {self.target_company}
+                </TARGET_COMPANY_NAME>
                 <CONTEXT>
-                    <SOURCE_DATA>
+                    <SOURCE_COMPANY_DATA>
                         {data_list[0]}
-                    </SOURCE_DATA>
+                    </SOURCE_COMPANY_DATA>
                     <TARGET_COMPANY_DATA>
                         {data_list[1]}
                     </TARGET_COMPANY_DATA>
@@ -224,17 +235,19 @@ class EmailGenFromGemini():
                     </TARGET_PERSON_DATA>
                 </CONTEXT>
                 <TASK>
-                    1. Generate an email describing how Source's product can be useful for the Target Person and the Target Company.
-                    2. Highlight the product/service features of Source company to the Target Person.
-                    3. Start the conversation in the email in a personalized way by talking about the Target Person,\
-                    their experiences, achievements, university education, interests and other.
+                    1. Generate an email describing how Source company's product(s) can be useful for the Target Person and the Target Company.
+                    2. Maintain the required structure of the email: subject, proper salutation, body and regards and include the source person's name wherever necessary.
+                    3. Highlight the product/service features of Source company to the Target Person.
+                    4. Start the conversation in the email in a personalized way by talking about the Target Person,\
+                    their experiences, achievements, university education, and interests from the context provided.
+                    5. While considering the target person's experiences, focus mostly on latest role and working company.
+                    6. Do not use template names such as: [SOURCE_PERSON_NAME], [SOURCE_NAME], etc.. but use the given names in context wherever possible.
                 </TASK>
                 <SPECIFICATIONS>
                     1. Stick only to the data provided, do not consider any external data or hallucinate.
                     2. Do not include text regarding the source or target company/person that isn't present in the given context.
                     3. Do not include more than 25-30 words in one line and give numbered bulletpoints only when necessary.
-                    4. Do not give a template for filling in Source Company, Target Company and Target Person names.
-                    But, take the names from the context provided.
+                    4. Consider the required names of Source Person, Source Company, Target Person and Target Company from the context provided.
                     5. Do not include hyperlinks/placeholder text in the content of the email.
                     4. Ensure that the content has the tone:
                         <TONE>
@@ -242,32 +255,16 @@ class EmailGenFromGemini():
                         </TONE>
                     5. You will also be given future instructions. If they are in conflict with the present ones, then consider the future ones.
                 </SPECIFICATIONS>
-                <EXAMPLE>
-                    Take this email as an example on how to generate an email in a personal way\
-                    Greetings <Target_Person_Name>, \
-                    I was attempting to stand out in your inbox with some clever, witty and impressive statements. Alas, I wrote this email instead.\
-                    Let me get straight to the point now. We are a software development company that has been assisting healthcare businesses and companies with their web and mobile app design and development.\
-                    I am including some of our amazing clientele here in the vain hope that they’ll impress you: AstraZeneca, Heartbeat Health, Valis Bioscience, Better PT, Concert Pharma, eVisit, CFG Health Systems, Merck and more. *Fingers Crossed*\
-                    Rather predictably, I would like a short call with you, to demonstrate how our team of engineers can help you with your healthcare services.\
-                    I trust this email will charm you into pressing the reply button.\
-                    I await your profanity filled response.\
-                    --\
-                    Have a positively wonderful day,\
-                    company name\
-                    P.S. If you don’t want to receive any more emails from us, simply reply and let us know \
-                </EXAMPLE>
                 '''
             
             # Setting the prompts in the result dictionary
             for key in self.result["prompt"].keys():
-                self.result["prompt"][key] = self.system_prompt
-                self.result["prompt"][key] += self.delimiter
+                self.result["prompt"][key] = self.system_prompt + self.delimiter
 
             # Initializing the chat class
-            chat.send_message(actual_prompt)
-            self.result["email_chat"]["fomal"] = chat.send_message(actual_prompt).text
-            self.result["email_chat"]["semi-formal"] = chat.send_message("Generate the mail in semi-formal tone").text
-            self.result["email_chat"]["jovial"] = chat.send_message("Generate email in jovial tone").text
+            self.result["email_chat"]["formal"] = chat.send_message(actual_prompt).text
+            self.result["email_chat"]["semi-formal"] = chat.send_message(f"Generate the mail in Semi-formal tone:\n{self.tone_list[1]}").text
+            self.result["email_chat"]["jovial"] = chat.send_message(f"Generate email in Jovial tone:\n{self.tone_list[2]}").text
 
         except Exception as e:
             print(f"Exception occurred: {e}")
