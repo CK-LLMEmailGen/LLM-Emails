@@ -262,8 +262,8 @@ class EmailGenFromGemini():
 
             # Initializing the chat class
             self.__result["email_chat"]["formal"] = chat.send_message(actual_prompt).text
-            self.__result["email_chat"]["semi-formal"] = chat.send_message(f"Generate the mail in Semi-formal tone:\n{self.__tone_list[1]}\n. Generate it different from the previous mails.").text
-            self.__result["email_chat"]["jovial"] = chat.send_message(f"Generate email in Jovial tone:\n{self.__tone_list[2]}\n. Generate it different from the previous mails.").text
+            self.__result["email_chat"]["semi-formal"] = chat.send_message(f"Generate the mail in Semi-formal tone:\n{self.__tone_list[1]}\n. Generate it totally different from the previous mails.").text
+            self.__result["email_chat"]["jovial"] = chat.send_message(f"Generate email in Jovial tone:\n{self.__tone_list[2]}\n. Generate it totally different from the previous mails.").text
 
         except Exception as e:
             print(f"Exception occurred: {e}")

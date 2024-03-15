@@ -130,7 +130,7 @@ async def upload_files(request: Request,
                     source_company = "Mondee",
                     target_company = "Accenture",
                     target_person = "Karan Gupta")
-        mail_obj = mail_gen_instance.email_generation()
+        # mail_obj = mail_gen_instance.email_generation()
         # print(mail)
         print(type(mail_obj))
         
@@ -149,9 +149,10 @@ async def upload_files(request: Request,
         </div>\
         </body>\
         </html>"
-        print(mail_obj["email_chat"]["formal"])
-        print(mail_obj["email_chat"]["semi-formal"])
-        print(mail_obj["email_chat"]["jovial"])
+        print(mail_obj["email_chat"]["formal"],end="\n\n")
+        print(mail_obj["email_chat"]["semi-formal"],end="\n\n")
+        print(mail_obj["email_chat"]["jovial"],end="\n\n")
+        print(mail_gen_instance.__get_current_time())
         return templates.TemplateResponse("index.html", {"request": request, "message":  "Files uploaded successfully", "text":mail_obj["email_chat"]["formal"]})
 
     return templates.TemplateResponse("index.html", {"request": request, "message": "Error occurred!", "text": "Email is not generated."})
