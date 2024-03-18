@@ -1,5 +1,3 @@
 **/__pycache__/
-/workspace/LLM-Emails/Secrets/
-/workspace/LLM-Emails/.gitpod.yml
-/workspace/LLM-Emails/app/uploads/
-/workspace/LLM-Emails/app/uploads/*
+Secrets/*
+app/uploads/*
