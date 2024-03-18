@@ -183,9 +183,10 @@
            
         }
         .container {
-            max-width: 800px;
+            width: 80%;
             margin: 20px auto;
             padding: 0 20px;
+            left: 70%;
         }
         .sidebar {
             width: calc(33.33% - 13.33px);
@@ -203,11 +204,16 @@
             clear: both;
         }
         .input-fields {
-            display: none;
-            margin-top: 20px;
+            display:none;
             background-color: #d8848a;
             border-radius: 5px;
             padding: 5px;
+            width:60%;
+            float:right;
+            margin-top:-59%;
+            margin-left:20%;
+            left:50%;
+            
         }
         .input-fields label {
             display: block;
@@ -259,6 +265,9 @@
             margin-top: 20px;
             display: flex;
             justify-content: space-between;
+            width:60%;
+            float:right;
+            margin-top:-59%;
         }
         .tone-column {
             width: calc(33.33% - 13.33px);
@@ -267,12 +276,28 @@
             border: 1px solid #ccc;
             border-radius: 10px;
             text-align: center;
+            
+            
         }
         button{
             margin-left:42.5%;
             margin-bottom: 2%;
             margin-top: 2%;
         }
+        .image-container {
+            float: left;
+            margin: 20px;
+            
+        }
+        .image-container img {
+            width: 90%;
+            height: auto;
+            border-radius: 5%;
+            margin: 2%;
+
+        }
+    
+        
     </style>
 </head>
 <body>
@@ -284,8 +309,19 @@
             </ul>
         </nav>
     </header>
+    <div>
+        
+        <div class="image-container">
+        <div>
+            <img src="https://media.istockphoto.com/id/1148931787/photo/email-marketing.webp?b=1&s=170667a&w=0&k=20&c=3fxzdpZvC2g-esMhqtAzcVHK_rIhxrMvK-cgdyxtNO4=" alt="Image">
+        </div>
+        <div >
+            <img src="https://media.istockphoto.com/id/1282806068/photo/email-marketing-concept-person-reading-e-mail-on-smartphone.jpg?s=612x612&w=0&k=20&c=NDoQ6NcTNAYi4Xsn30XVmB-QXdr907PTOQPnqLNdAlc=" alt="Image">
+        </div>
+        </div>
     <div class="container">
-        <div class="flex-container">
+        
+        <div class="flex-container" >
             <div class="sidebar" onclick="changeSidebarColor(this)">
                 <h3 onclick="showInputFields()">Client Specifications</h3>
                 
@@ -302,9 +338,11 @@
     </div>
     <div class="container">
         <form action="#" method="post" id="clientSpecificationsForm">
-            <div class="input-fields" id="inputFields">
+            <div class="input-fields" id="inputFields" >
                 <label for="senderName">Sender Name:</label>
                 <input type="text" id="senderName" name="senderName" placeholder="Enter sender name"><br>
+                <label for="senderName">Designation:</label>
+                <input type="text" id="designation" name="designation" placeholder="Enter sender designation"><br>
                 <label for="productDescription">Product Description Text File:</label>
                 <input type="file" id="productDescription" name="productDescription" accept=".txt" placeholder="Upload product description text file"><br>
                 <label for="companyFile">Source Company Text File:</label>
@@ -330,7 +368,7 @@
             </div>
         </div>
     </div>
-
+</div>
 
     <script>
         function showInputFields() {
