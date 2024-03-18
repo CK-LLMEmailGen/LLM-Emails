@@ -5,4 +5,9 @@
 # Learn more from ready-to-use templates: https://www.gitpod.io/docs/introduction/getting-started/quickstart
 
 tasks:
-  - init: pip install -r requirements.txt
+  - name: Setup and Install
+    init: pip install -r requirements.txt
+    command: echo 'Include Secrets folder in /workspace/LLM-Emails directory and generated_mails.log file in logs directory' && echo 'Setup complete' "
+
+
+  
