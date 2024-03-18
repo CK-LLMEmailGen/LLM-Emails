@@ -20,7 +20,7 @@ def get_time() -> str:
 def write_to_file(filepath : str = "" , text : str = ""):
     try:
         with open(filepath, "a") as file:
-            file.write(f"\n\n\n{get_time()}:\n{text}\n\n\n")
+            file.write(f"\n{get_time()}:\n{text}\n")
     except Exception as e:
         with open(error_log, "a") as log_file:
             log_file.write(f"\nLogs exception occured at {get_time()}: {e}\n")

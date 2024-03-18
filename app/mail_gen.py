@@ -158,14 +158,15 @@ class EmailGenFromGemini():
             
             # Setting the prompts in the __result dictionary
             for key in self.__result["prompt"].keys():
-                self.__result["prompt"][key] = mail.system_prompt + mail.delimiter
+                self.__result["prompt"][key] += mail.system_prompt + mail.delimiter
 
             chat.send_message(f'''{actual_prompt}''')
 
             # Initializing the chat class for the three tones:
             for key in self.__result["email_chat"].keys():
-                self.__result["email_chat"][key] = chat.send_message(f"Using the context in the first prompt, generate a new email from <SOURCE_PERSON_NAME> of <SOURCE_COMPANY_NAME>\
-                    to the <TARGET_PERSON_NAME> of <TARGET_PERSON_COMPANY> in the tone:\n \n{mail.tone_dict[key]}, follow the previous tasks<TASKS> given with the specifications<SPECIFICATIONS> include the names of the persons whereever necessary:").text
+                self.__result["email_chat"][key] += chat.send_message(f"Using the context in the first prompt, generate a new email from <SOURCE_PERSON_NAME> of <SOURCE_COMPANY_NAME>\
+                    to the <TARGET_PERSON_NAME> of <TARGET_PERSON_COMPANY> in the tone:\n{mail.tone_dict[key]}, follow the previous tasks <TASKS> given with the specifications <SPECIFICATIONS>;\
+                        include the names of the persons whereever necessary:").text
                 self.__result["email_chat"][key] += mail.delimiter
                 # print(self.__result["email_chat"][key], end = "end\n\n\n")
                 
@@ -201,10 +202,10 @@ class EmailGenFromGemini():
             self.__result["target_person_name"] = self.target_person
             self.__result["target_company_name"] = self.target_company
             self.__result["timestamp"] = self.__get_current_time()
-            self.__result["final_email"] = self.__result["email_chat"]["formal"]
+            self.__result["final_email"] = self.__result["email_chat"]["jovial"]
 
             for key in self.__result["email_chat"].keys():
-                wtl.write_to_file(wtl.generated_mails_log, f"\n{self.__result["emal_chat"][key]}\n")
+                wtl.write_to_file(wtl.generated_mails_log, f"{key}:\n{self.__result["email_chat"][key].rstrip(mail.delimiter)}\n")
             
             return self.__result.copy()
         

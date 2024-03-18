@@ -40,13 +40,9 @@ def authenticate(storage_client : storage.Client = None) -> bool:
 def change_file_name(filepath : str = None) -> str:
     original_file_path = filepath
     file_list = filepath.split('/')
-    file_list[-1] = file_list[-1].replace(" ","_")
-    file_list[-1][0] = file_list[-1][0].upper()
-    result_path = ""
-    for string in file_list:
-        result_path += string
-        result_path += "/"
-    result_path = result_path[0:-1]
+    file_name = file_list[-1].replace(" ", "_")
+    file_name = file_name[0].upper() + file_name[1:]
+    result_path = "/".join([*file_list[:-1], file_name])
     os.rename(original_file_path,result_path)
     return result_path
         
@@ -118,8 +114,6 @@ async def upload_files(request: Request,
                 file_path_list[2] = change_file_name(file_path_list[2])
                 target_company_name = f"{file_path_list[1].split('/')[-1].split('.')[0]}"
                 folder_name = gcp.upload_person_folder + target_company_name + "/"
-                print("file_path_list: " + file_path_list[2])
-                print("folder_name: " + folder_name)
                 if not check_exists(storage_client, gcp.upload_person_folder, target_company_name + "/"):               # Check if company folder for target person exists or not.
                     bucket = storage_client.get_bucket(gcp.bucket_name)
                     blob = bucket.blob(f"{target_company_name}/")
@@ -131,7 +125,8 @@ async def upload_files(request: Request,
                     print(f"{file_path_list[2]} already exists.")
         
         except Exception as e:
-            wtl.write_to_file(wtl.gcp_log, e)
+            print(f"{e}")
+            # wtl.write_to_file(wtl.gcp_log, e)
         
         try:
             # Generating the mail
@@ -160,9 +155,9 @@ async def upload_files(request: Request,
             </body>\
             </html>"
 
-            print(mail_obj["email_chat"]["formal"].strip(f"{mail.delimiter}"),end="\n\n")
-            print(mail_obj["email_chat"]["semi-formal"].strip(f"{mail.delimiter}"),end="\n\n")
-            print(mail_obj["email_chat"]["jovial"].strip(f"{mail.delimiter}"),end="\n\n")
+            print(mail_obj["email_chat"]["formal"].rstrip(mail.delimiter),end="\n\n")
+            print(mail_obj["email_chat"]["semi-formal"].rstrip(mail.delimiter),end="\n\n")
+            print(mail_obj["email_chat"]["jovial"].rstrip(mail.delimiter),end="\n\n")
             return templates.TemplateResponse("index.html", {"request": request, "message":  "Files uploaded successfully", "text":mail_obj["email_chat"]["jovial"].strip(f"{mail.delimiter}")})
         
         except Exception as e:
