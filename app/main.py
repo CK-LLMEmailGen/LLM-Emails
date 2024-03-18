@@ -25,11 +25,11 @@ for i in range(3):
 templates = Jinja2Templates(directory="/workspace/LLM-Emails/app/templates")
 
 # Checking if the service account is correctly authenticated or not
-def authenticate() -> bool:
+def authenticate(storage_client : storage.Client = None) -> bool:
     try:
-        temp_project_id = storage_Client.project
+        temp_project_id = storage_client.project
         return temp_project_id == gcp.project_id
-    except Exception(e):
+    except Exception as e:
         # print(f"Exception:\n{e}")
         wtl.write_to_file(wtl.gcp_log, e)
         return False
@@ -54,9 +54,9 @@ def change_file_name(filepath : str = None) -> str:
 
 
 # Function to check if upload file exists in cloud bucket or not:
-def check_exists(folder_name : str = None, file_path : str = None) -> bool:
+def check_exists(storage_client : storage.Client = None, folder_name : str = None, file_path : str = None) -> bool:
     file_name = file_path.split('/')[-1]
-    bucket = storage_Client.get_bucket(gcp.bucket_name)
+    bucket = storage_client.get_bucket(gcp.bucket_name)
     blobs = bucket.list_blobs(prefix = folder_name)
     blob = any(blob.name == f"{folder_name}{file_name}" for blob in blobs)
     if blob:
@@ -66,9 +66,9 @@ def check_exists(folder_name : str = None, file_path : str = None) -> bool:
 
 
 # Upload file to the bucket:
-def upload_file(folder_name : str = None, file_path : str = None):
+def upload_file(storage_client : storage.Client = None, folder_name : str = None, file_path : str = None):
     file_name = file_path.split('/')[-1]
-    bucket = storage_Client.get_bucket(gcp.bucket_name)
+    bucket = storage_client.get_bucket(gcp.bucket_name)
     blob = bucket.blob(f"{folder_name}{file_name}")
     blob.upload_from_filename(file_path)
 
@@ -101,16 +101,16 @@ async def upload_files(request: Request,
 
         try:
             # storage_Client object
-            storage_Client = storage.Client.from_service_account_json(gcp.key_path)
+            storage_client = storage.Client.from_service_account_json(gcp.key_path)
 
             # Authenticating for gcp bucket
-            if authenticate():
+            if authenticate(storage_client):
                 # Uploading the target and source company's description
                 for i in range(2):
                     file_path_list[i] = change_file_name(file_path_list[i])
-                    if not check_exists(gcp.upload_company_folder, file_path_list[i]):
+                    if not check_exists(storage_client, gcp.upload_company_folder, file_path_list[i]):
                         print(f"{file_path_list[i]} doesn't exist.")
-                        upload_file(gcp.upload_company_folder, file_path_list[i])
+                        upload_file(storage_client, gcp.upload_company_folder, file_path_list[i])
                     else:
                         print(f"{file_path_list[i]} already exists")
 
@@ -120,12 +120,12 @@ async def upload_files(request: Request,
                 folder_name = gcp.upload_person_folder + target_company_name + "/"
                 print("file_path_list: " + file_path_list[2])
                 print("folder_name: " + folder_name)
-                if not check_exists(gcp.upload_person_folder, target_company_name + "/"):               # Check if company folder for target person exists or not.
-                    bucket = storage_Client.get_bucket(gcp.bucket_name)
+                if not check_exists(storage_client, gcp.upload_person_folder, target_company_name + "/"):               # Check if company folder for target person exists or not.
+                    bucket = storage_client.get_bucket(gcp.bucket_name)
                     blob = bucket.blob(f"{target_company_name}/")
                     bolb.upload_from_string('')
-                if not check_exists(folder_name, file_path_list[2]):
-                    upload_file(f"{folder_name}", file_path_list[2])
+                if not check_exists(storage_client, folder_name, file_path_list[2]):
+                    upload_file(storage_client, f"{folder_name}", file_path_list[2])
                     print(f"{file_path_list[2]} doesn't exist.")
                 else:
                     print(f"{file_path_list[2]} already exists.")

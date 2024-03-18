@@ -10,7 +10,6 @@ from google.generativeai.generative_models import ChatSession, GenerativeModel
 
 
 
-
 class EmailGenFromGemini():
 
     def __init__(self, model_name = 'gemini-pro',
@@ -60,7 +59,7 @@ class EmailGenFromGemini():
     def __get_data_from_file(self, file_path) -> str:
         try:
             with open(file_path, 'r') as file:
-                data = file.read(file_path)
+                data = file.read()
                 return data
         except Exception as e:
             wtl.write_to_file(wtl.file_read_log, e)
@@ -100,7 +99,7 @@ class EmailGenFromGemini():
             return current_time.strftime("%Y-%m-%d_%H:%M:%S")
         except Exception as e:
             with open(wtl.error_log, 'a') as file:
-                file.write(f"\n\n\nLogs exception occured at {get_time()}:\n{e}\n\n\n")
+                file.write(f"\nLogs exception occured at {get_time()}: {e}\n")
             return None
 
 
@@ -203,6 +202,10 @@ class EmailGenFromGemini():
             self.__result["target_company_name"] = self.target_company
             self.__result["timestamp"] = self.__get_current_time()
             self.__result["final_email"] = self.__result["email_chat"]["formal"]
+
+            for key in self.__result["email_chat"].keys():
+                wtl.write_to_file(wtl.generated_mails_log, f"\n{self.__result["emal_chat"][key]}\n")
+            
             return self.__result.copy()
         
         else:
