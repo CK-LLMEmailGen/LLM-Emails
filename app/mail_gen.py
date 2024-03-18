@@ -2,6 +2,8 @@
 import os
 import pytz
 import dotenv
+from share import mail
+import write_to_log as wtl
 import google.generativeai as genai
 from datetime import datetime
 from google.generativeai.generative_models import ChatSession, GenerativeModel
@@ -16,7 +18,7 @@ class EmailGenFromGemini():
                  target_company_path = None,
                  target_person_path = None,
                  source_person = "John Doe",
-                 source_person_designation = "Sales Executive",
+                 source_person_designation = "Lead generation associate",
                  source_company = None,
                  target_company = None,
                  target_person = None
@@ -30,88 +32,6 @@ class EmailGenFromGemini():
         self.source_path = source_path
         self.target_company_path = target_company_path
         self.target_person_path = target_person_path
-
-
-    # Declaring the tone to be used
-    __tone_list = [
-    '''Formal:
-        Craft a formal business email with a professional tone.
-        Address the recipient with proper salutations, maintain a respectful language, and avoid overly informal expressions.
-        Begin by acknowledging the recipient's professional achievements, introduce your company's services clearly and concisely,
-        and conclude with a formal expression of interest in potential collaboration or discussion.''',
-    
-    '''Semi-formal:
-        Generate an email with a semi-formal tone, striking a balance between professionalism and friendliness.
-        Address the recipient by name, express admiration for their achievements,
-        and introduce your company's services in a straightforward yet approachable manner.
-        Conclude the email with a courteous invitation for further discussion or collaboration,
-        maintaining a tone that is both respectful and personable.''',
-
-    '''Jovial:
-        Compose a friendly and upbeat email in a jovial tone. Use light-hearted language, incorporate positive greetings,
-        and perhaps share a relevant, industry-related joke or anecdote. Introduce your company's services in a casual,
-        engaging manner, and conclude the email with an invitation for further discussion or collaboration. Maintain an overall lively and friendly tone throughout.
-        Include emojis wherever possible.''',        
-    ]
-
-    # Original Prompt
-    __original_prompt = '''
-        The data is given below in the form of HTML tags: every tag name describes its contents within its opening and closing tags.
-        You have to use the context given, to perform the task with the required specifications, using the given example.
-        <SOURCE_PERSON_NAME>
-            {Source_person}
-        </SOURCE_PERSON_NAME>
-        <SOURCE_COMPANY_NAME>
-            {Source_company}
-        </SOURCE_COMPANY_NAME>
-        <TARGET_PERSON_NAME>
-            {Target_person}
-        </TARGET_PERSON_NAME>
-        <TARGET_COMPANY_NAME>
-            {Target_company}
-        </TARGET_COMPANY_NAME>
-        <CONTEXT>
-            <SOURCE_DATA>
-                {Source_data}
-            </SOURCE_DATA>
-            <TARGET_COMPANY_DATA>
-                {Target_company_data}
-            </TARGET_COMPANY_DATA>
-            <TARGET_PERSON_DATA>
-                {Target_person_data}
-            </TARGET_PERSON_DATA>
-        </CONTEXT>
-        <TASK>
-            1. Generate an email describing how Source company's product(s) can be useful for the Target Person and the Target Company.
-            2. Maintain the required structure of the email: subject, proper slautation, body and regards and include the source person's name wherever necessary.
-            2. Highlight the product/service features of Source company to the Target Person.
-            3. Start the conversation in the email in a personalized way by talking about the Target Person,\
-               their experiences, achievements, university education and interests from the context provided.
-            5. While considering the target person's experiences, focus mostly on latest role and working company.
-            6. Do not use template names such as: [SOURCE_PERSON_NAME], [SOURCE_NAME], etc... but use the given names in context wherever possible.
-        </TASK>
-        <SPECIFICATIONS>
-            1. Stick only to the data provided, do not consider any external data or hallucinate.
-            2. Do not include text regarding the source or target company/person that isn't present in the given context.
-            3. Do not include more than 25-30 words in one line and give numbered bulletpoints only when necessary.
-            4. Do not give a template for filling in Source Company, Target Company and Target Person names.
-               But, take the names from the context provided.
-            5. Do not include hyperlinks/placeholder text in the content of the email.
-            4. Ensure that the content has the tone:
-                <TONE>
-                    {tone}
-                </TONE>
-            5. You will also be given future instructions. If they are in conflict with the present ones, then consider the future ones.
-        </SPECIFICATIONS>
-        '''
-
-    # System Prompt
-    __system_prompt = "You are a professional sales outreach executive with over 15 years of experience.\
-                                    You leverage the use of English as a language and context about the: Source, Target Company and Target person)\
-                                    to write a hyper-personalized sales outreach email to the Target Person."
-
-    # __delimiter for prompts and chat results.
-    __delimiter = "\n<DELIMITER>\n"
 
     # Declaring the dictionary to be used
     __result = dict()
@@ -140,10 +60,10 @@ class EmailGenFromGemini():
     def __get_data_from_file(self, file_path) -> str:
         try:
             with open(file_path, 'r') as file:
-                data = file.read()
+                data = file.read(file_path)
                 return data
-        except FileNotFoundError:
-            print(f"{file_path} file is not found")
+        except Exception as e:
+            wtl.write_to_file(wtl.file_read_log, e)
             return ""
 
 
@@ -151,11 +71,11 @@ class EmailGenFromGemini():
     # Function to get the API Key of Gemini
     def __get_gemini_api_key(self) -> None:
         try:
-            if dotenv.load_dotenv("/workspace/LLM-Emails/Secrets/.env"):    
+            if dotenv.load_dotenv("../Secrets/.env"):    
                 genai.configure(api_key = os.getenv("API_KEY"))
                 return True
         except Exception as e:
-            print(f"Exception occurred at Gemini API Key Authentication: {e}")
+            wtl.write_to_file(wtl.gemini_log, e)
             return False
 
 
@@ -179,28 +99,9 @@ class EmailGenFromGemini():
             current_time = datetime.now(timezone)
             return current_time.strftime("%Y-%m-%d_%H:%M:%S")
         except Exception as e:
-            print(f"Failed to get the current time zone, exception:\n{e}")
+            with open(wtl.error_log, 'a') as file:
+                file.write(f"\n\n\nLogs exception occured at {get_time()}:\n{e}\n\n\n")
             return None
-
-
-
-    # # Chat Completion function for Gemini
-    # def get_gemini_completion(self, prompt, temp = 0.5) -> str:
-    #     try:
-    #         genai.configure(api_key = os.getenv("API_KEY"))
-    #         model = genai.GenerativeModel('models/'+self.model_name)
-    #         response = model.generate_content(
-    #             prompt,
-    #             generation_config = genai.types.GenerationConfig(
-    #                 candidate_count = 1,
-    #                 stop_sequences = ['space'],
-    #                 temperature = temp
-    #             )
-    #         )
-    #         return response
-    #     except Exception as e:
-    #         print(f"Failed to get the answer from the model, exception:\n{e}")
-    #         return None
 
 
 
@@ -213,6 +114,9 @@ class EmailGenFromGemini():
                 <SOURCE_PERSON_NAME>
                     {self.source_person}
                 </SOURCE_PERSON_NAME>
+                <SOURCE_PERSON_DESIGNATION>
+                    {self.source_person_designation}
+                </SOURCE_PERSON_DESIGNATION>
                 <SOURCE_COMPANY_NAME>
                     {self.source_company}
                 </SOURCE_COMPANY_NAME>
@@ -248,25 +152,26 @@ class EmailGenFromGemini():
                     3. Do not include more than 25-30 words in one line and give numbered bulletpoints only when necessary.
                     4. Consider the required names of Source Person, Source Company, Target Person and Target Company from the context provided.
                     5. Do not include hyperlinks/placeholder text in the content of the email.
-                    4. Ensure that the content has the tone:
-                        <TONE>
-                            {self.__tone_list[0]}
-                        </TONE>
+                    4. Generate the email based on the tone asked.
                     5. You will also be given future instructions. If they are in conflict with the present ones, then consider the future ones.
                 </SPECIFICATIONS>
                 '''
             
-            # Setting the prompts in the result dictionary
+            # Setting the prompts in the __result dictionary
             for key in self.__result["prompt"].keys():
-                self.__result["prompt"][key] = self.__system_prompt + self.__delimiter
+                self.__result["prompt"][key] = mail.system_prompt + mail.delimiter
 
-            # Initializing the chat class
-            self.__result["email_chat"]["formal"] = chat.send_message(actual_prompt).text
-            self.__result["email_chat"]["semi-formal"] = chat.send_message(f"Generate the mail in Semi-formal tone:\n{self.__tone_list[1]}\n. Generate it totally different from the previous mails.").text
-            self.__result["email_chat"]["jovial"] = chat.send_message(f"Generate email in Jovial tone:\n{self.__tone_list[2]}\n. Generate it totally different from the previous mails.").text
+            chat.send_message(f'''{actual_prompt}''')
 
+            # Initializing the chat class for the three tones:
+            for key in self.__result["email_chat"].keys():
+                self.__result["email_chat"][key] = chat.send_message(f"Using the context in the first prompt, generate a new email from <SOURCE_PERSON_NAME> of <SOURCE_COMPANY_NAME>\
+                    to the <TARGET_PERSON_NAME> of <TARGET_PERSON_COMPANY> in the tone:\n \n{mail.tone_dict[key]}, follow the previous tasks<TASKS> given with the specifications<SPECIFICATIONS> include the names of the persons whereever necessary:").text
+                self.__result["email_chat"][key] += mail.delimiter
+                # print(self.__result["email_chat"][key], end = "end\n\n\n")
+                
         except Exception as e:
-            print(f"Exception occurred: {e}")
+            wtl.write_to_file(wtl.gemini_log, e)
         
         
 
@@ -284,9 +189,9 @@ class EmailGenFromGemini():
             self.__initialize_model(chat, data_list)
 
             # Display for the formal, semi-formal and jovial-tones for the initial stage.
-            # result["email"]["formal"]
-            # result["email"]["semi-formal"]
-            # result["email"]["jovial"]
+            # __result["email"]["formal"]
+            # __result["email"]["semi-formal"]
+            # __result["email"]["jovial"]
 
             # User will select one of the tones and then make necessary changes.
 
@@ -298,8 +203,27 @@ class EmailGenFromGemini():
             self.__result["target_company_name"] = self.target_company
             self.__result["timestamp"] = self.__get_current_time()
             self.__result["final_email"] = self.__result["email_chat"]["formal"]
-            return self.__result
+            return self.__result.copy()
         
         else:
             print("API Key authentication failed for Gemini!!!!")
             return None
+
+
+    # # Chat Completion function for Gemini
+    # def get_gemini_completion(self, prompt, temp = 0.5) -> str:
+    #     try:
+    #         genai.configure(api_key = os.getenv("API_KEY"))
+    #         model = genai.GenerativeModel('models/'+self.model_name)
+    #         response = model.generate_content(
+    #             prompt,
+    #             generation_config = genai.types.GenerationConfig(
+    #                 candidate_count = 1,
+    #                 stop_sequences = ['space'],
+    #                 temperature = temp
+    #             )
+    #         )
+    #         return response
+    #     except Exception as e:
+    #         print(f"Failed to get the answer from the model, exception:\n{e}")
+    #         return None
