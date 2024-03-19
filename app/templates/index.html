@@ -36,20 +36,26 @@
 </style>
 <script>
     function validateForm() {
-        var radios = document.getElementsByName("tone");
+        var fileInputs = document.querySelectorAll('input[type="file"]');
+        var filesUploadedCount = 0;
         var formValid = false;
+
+        fileInputs.forEach(function(input) {})
+        
+
+        
     
-        for (var i = 0; i < radios.length; i++) {
-            if (radios[i].checked) {
-                formValid = true;
-                break;
-            }
-        }
+        // for (var i = 0; i < radios.length; i++) {
+        //     if (radios[i].checked) {
+        //         formValid = true;
+        //         break;
+        //     }
+        // }
     
-        if (!formValid) {
-            alert("Please select a tone.");
-            return false;
-        }
+        // if (!formValid) {
+        //     alert("Please select a tone.");
+        //     return false;
+        // }
     
         return true;
     }
@@ -61,11 +67,15 @@
     <h2>Upload Files</h2>
     
     <form method="post" enctype="multipart/form-data">
+
         <label for="productDescription">Product Description &nbsp;&nbsp;:</label>
         <input type="file" name="productDescription" required>
         <small>Upload product details file</small><br><br>
+
+        <label for="sourceCompany">Source Company &nbsp;&nbsp;</label>
         <input type="file" name="sourceCompany" required>
         <small>Upload source Company details</small><br><br>
+
         <label for="targetCompany">Target Company&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;:</label>
         <input type="file" name="targetCompany" required>
@@ -75,18 +85,9 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label>
         <input type="file" name="targetPerson" required>
         <small>Upload target person details</small><br><br>
-        
-        <label for="tone">Select Tone:</label><br>
-        <input type="radio" id="formal" name="tone" value="formal" required>
-        <label for="formal">Formal</label><br>
-        
-        <input type="radio" id="semiFormal" name="tone" value="semi-formal" required>
-        <label for="semiFormal">Semi-Formal</label><br>
-        
-        <input type="radio" id="jovial" name="tone" value="jovial" required>
-        <label for="jovial">Jovial</label><br><br>
 
         <input type="submit" value="Upload Files">
+
     </form>
     {% if text %}
     <div id="message-container" style="border: 1px solid #ccc; padding: 10px; overflow: auto;">

@@ -5,12 +5,12 @@
 # Learn more from ready-to-use templates: https://www.gitpod.io/docs/introduction/getting-started/quickstart
 
 # WorkspaceLocation:
-workspaceLocation: '.'
+workspaceLocation: 'LLM-Emails/'
 
 # tasks
 tasks:
   - name: Setup and Install
-    init: pip3 install -r requirements.txt
+    init: pip3 install -r app/requirements.txt
     command: echo 'Include Secrets folder in /workspace/LLM-Emails directory and generated_mails.log file in logs directory' && echo 'Setup complete'
   
 # Extensions:
