@@ -9,6 +9,18 @@ from fastapi.templating import Jinja2Templates
 from fastapi import FastAPI, File, UploadFile, Request, Form
 app = FastAPI()
 
+# Initialize templates
+templates = Jinja2Templates(directory="/workspace/LLM-Emails/app/templates")
+
+@app.get("/", response_class=HTMLResponse)
+async def home(request: Request, message: str = None):
+    return templates.TemplateResponse("index.html", {"request": request})
+
+
+
+
+
+
 # List of folder paths
 folder_path_list = [
     "/workspace/LLM-Emails/app/uploads/product_description/",
@@ -21,9 +33,6 @@ file_path_list = []                                                             
 # Ensure upload folders are created
 for i in range(4):
     os.makedirs(folder_path_list[i], exist_ok = True)
-
-# Initialize templates
-templates = Jinja2Templates(directory="/workspace/LLM-Emails/app/templates")
 
 # Checking if the service account is correctly authenticated or not
 def authenticate(storage_client : storage.Client = None) -> bool:
@@ -168,3 +177,37 @@ async def upload_files(request: Request,
             wtl.write_to_file(wtl.generated_mails_log, e)
 
         return templates.TemplateResponse("index.html", {"request": request, "message": "Error occurred!", "text": "Email is not generated."})
+
+
+
+
+
+
+
+# @app.post("/submit-client-specifications")
+# async def submit_client_specifications(request: Request):
+#     form_data = await request.form()
+#     sender_name = form_data.get("senderName")
+#     designation = form_data.get("designation")
+#     product_description_file = request.files.get("productDescription")
+#     source_company_file = request.files.get("sourceCompanyFile")
+
+#     if sender_name and designation and product_description_file and company_file:
+
+#         return {"status": "success", "message": "Target Specifications Form is displayed"}
+#     else:
+#         return {"status": "error", "message": "Invalid form data"}
+
+
+# @app.post("/submit-target-specifications")
+# async def submit_target_specifications(request: Request):
+#     form_data = await request.form()
+#     target_company_name = form_data.get("targetCompanyName")
+#     target_person_name = form_data.get("targetPersonName")
+#     target_company_decription_file = request.files.get("targetCompanyDescription")
+
+#     if target_company_name and target_person_name and target_company_description_file:
+        
+#         return {"status": "success", "message": "DONE!" }
+#     else:
+#         return {"status": "error", "message": "Invalid form data"}
