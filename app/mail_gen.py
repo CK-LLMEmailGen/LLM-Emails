@@ -13,6 +13,7 @@ from google.generativeai.generative_models import ChatSession, GenerativeModel
 class EmailGenFromGemini():
 
     def __init__(self, model_name = 'gemini-pro',
+                 product_path = None,
                  source_path = None,
                  target_company_path = None,
                  target_person_path = None,
@@ -28,6 +29,7 @@ class EmailGenFromGemini():
         self.source_company = source_company
         self.target_person = target_person
         self.target_company = target_company
+        self.product_path = product_path
         self.source_path = source_path
         self.target_company_path = target_company_path
         self.target_person_path = target_person_path
@@ -116,9 +118,9 @@ class EmailGenFromGemini():
                 <SOURCE_PERSON_DESIGNATION>
                     {self.source_person_designation}
                 </SOURCE_PERSON_DESIGNATION>
-                <SOURCE_COMPANY_NAME>
+                <SOURCE_COMPANY_DETAILS>
                     {self.source_company}
-                </SOURCE_COMPANY_NAME>
+                </SOURCE_COMPANY_DETIALS>
                 <TARGET_PERSON_NAME>
                     {self.target_person}
                 </TARGET_PERSON_NAME>
@@ -126,6 +128,9 @@ class EmailGenFromGemini():
                     {self.target_company}
                 </TARGET_COMPANY_NAME>
                 <CONTEXT>
+                    <PRODUCT_DESCRIPTION_OF_SOURCE_COMPANY>
+                        {data_list[1]}
+                    </PRODUCT_DESCRIPTION_OF_SOURCE_COMPANY>
                     <SOURCE_COMPANY_DATA>
                         {data_list[0]}
                     </SOURCE_COMPANY_DATA>
@@ -178,10 +183,10 @@ class EmailGenFromGemini():
     # Function to get the email and other data
     def email_generation(self) -> dict:
         if self.__get_gemini_api_key():
-            path_list = [self.source_path, self.target_company_path, self.target_person_path]
+            path_list = [self.product_path, self.source_path, self.target_company_path, self.target_person_path]
             data_list = []
 
-            for i in range(3):
+            for i in range(4):
                 data_list.append(self.__get_data_from_file(path_list[i]))
 
             model = genai.GenerativeModel(self.model_name)

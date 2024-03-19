@@ -12,13 +12,14 @@ app = FastAPI()
 # List of folder paths
 folder_path_list = [
     "/workspace/LLM-Emails/app/uploads/product_description/",
+    "/workspace/LLM-Emails/app/uploads/source_company/",
     "/workspace/LLM-Emails/app/uploads/target/target_company/",
     "/workspace/LLM-Emails/app/uploads/target/target_person/" 
 ]
-file_path_list = []                                                             # list of file paths
+file_path_list = []                                                                                                     # list of file paths
 
 # Ensure upload folders are created
-for i in range(3):
+for i in range(4):
     os.makedirs(folder_path_list[i], exist_ok = True)
 
 # Initialize templates
@@ -78,22 +79,24 @@ async def home(request: Request, message: str = None):
 @app.post("/")
 async def upload_files(request: Request,
                        productDescription: UploadFile = File(...),
+                       sourceCompany: UploadFile = File(...),
                        targetCompany: UploadFile = File(...),
                        targetPerson: UploadFile = File(...),
                         tone: str = Form(...)):
         try:
-            file_objects_list = [productDescription, targetCompany, targetPerson]                       # list of file objects
+            file_objects_list = [productDescription, sourceCompany, targetCompany, targetPerson]                                            # list of file objects
             
-            for i in range(3):  
+            for i in range(4):  
                 file_path_list.append(os.path.join(folder_path_list[i], file_objects_list[i].filename))
             
             # Storing the uploaded files in their respective folders.
-            for i in range(3):
+            for i in range(4):
                 with open(file_path_list[i], "wb") as buffer:
                     buffer.write(await file_objects_list[i].read())
-        
+
         except Exception as e:
             wtl.write_to_file(wtl.data_upload_log, e)
+
 
         try:
             # storage_Client object
@@ -102,7 +105,7 @@ async def upload_files(request: Request,
             # Authenticating for gcp bucket
             if authenticate(storage_client):
                 # Uploading the target and source company's description
-                for i in range(2):
+                for i in range(3):
                     file_path_list[i] = change_file_name(file_path_list[i])
                     if not check_exists(storage_client, gcp.upload_company_folder, file_path_list[i]):
                         print(f"{file_path_list[i]} doesn't exist.")
@@ -111,15 +114,15 @@ async def upload_files(request: Request,
                         print(f"{file_path_list[i]} already exists")
 
                 # Uploading the target person's description
-                file_path_list[2] = change_file_name(file_path_list[2])
+                file_path_list[3] = change_file_name(file_path_list[3])
                 target_company_name = f"{file_path_list[1].split('/')[-1].split('.')[0]}"
                 folder_name = gcp.upload_person_folder + target_company_name + "/"
-                if not check_exists(storage_client, gcp.upload_person_folder, target_company_name + "/"):               # Check if company folder for target person exists or not.
+                if not check_exists(storage_client, gcp.upload_person_folder, target_company_name + "/"):                       # Check if company folder for target person exists or not.
                     bucket = storage_client.get_bucket(gcp.bucket_name)
                     blob = bucket.blob(f"{target_company_name}/")
                     bolb.upload_from_string('')
-                if not check_exists(storage_client, folder_name, file_path_list[2]):
-                    upload_file(storage_client, f"{folder_name}", file_path_list[2])
+                if not check_exists(storage_client, folder_name, file_path_list[3]):
+                    upload_file(storage_client, f"{folder_name}", file_path_list[3])
                     print(f"{file_path_list[2]} doesn't exist.")
                 else:
                     print(f"{file_path_list[2]} already exists.")
@@ -131,9 +134,10 @@ async def upload_files(request: Request,
         try:
             # Generating the mail
             mail_gen_instance = EmailGenFromGemini(model_name = 'gemini-pro',
-                        source_path = file_path_list[0],
-                        target_company_path = file_path_list[1],
-                        target_person_path = file_path_list[2],
+                        product_path = file_path_list[0],
+                        source_path = file_path_list[1],
+                        target_company_path = file_path_list[2],
+                        target_person_path = file_path_list[3],
                         source_company = "Mondee",
                         target_company = "Accenture",
                         target_person = "Karan Gupta")
