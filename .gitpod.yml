@@ -4,10 +4,25 @@
 
 # Learn more from ready-to-use templates: https://www.gitpod.io/docs/introduction/getting-started/quickstart
 
+# WorkspaceLocation:
+workspaceLocation: '.'
+
+# tasks
 tasks:
   - name: Setup and Install
-    init: pip install -r requirements.txt
-    command: echo 'Include Secrets folder in /workspace/LLM-Emails directory and generated_mails.log file in logs directory' && echo 'Setup complete' "
+    init: pip3 install -r requirements.txt
+    command: echo 'Include Secrets folder in /workspace/LLM-Emails directory and generated_mails.log file in logs directory' && echo 'Setup complete'
 
-
+# Ports to be exposed:
+ports:
+  - port: 8000
+    onOpen: open-browser
+    name: LLM-EMAILS
+    description: Geni-AI app to simplify lead conversion and generation
+    visibility: private
+    protocol: https
   
+# Extensions:
+vscode:
+  extensions:
+    - esbenp.prettier-vscode
