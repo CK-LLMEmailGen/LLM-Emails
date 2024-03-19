@@ -82,7 +82,7 @@ async def upload_files(request: Request,
                        sourceCompany: UploadFile = File(...),
                        targetCompany: UploadFile = File(...),
                        targetPerson: UploadFile = File(...),
-                        tone: str = Form(...)):
+                       ):
         try:
             file_objects_list = [productDescription, sourceCompany, targetCompany, targetPerson]                                            # list of file objects
             
@@ -105,7 +105,7 @@ async def upload_files(request: Request,
             # Authenticating for gcp bucket
             if authenticate(storage_client):
                 # Uploading the target and source company's description
-                for i in range(3):
+                for i in range(1,3):
                     file_path_list[i] = change_file_name(file_path_list[i])
                     if not check_exists(storage_client, gcp.upload_company_folder, file_path_list[i]):
                         print(f"{file_path_list[i]} doesn't exist.")

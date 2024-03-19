@@ -1,0 +1,5 @@
+project_id="cloudkarya-internship"
+bucket_name="email_gen_llm"
+upload_company_folder="Company_Data/"
+upload_person_folder="Person_Data/"
+key_path="LLM-Emails/Secrets/gcp_service_account.json"

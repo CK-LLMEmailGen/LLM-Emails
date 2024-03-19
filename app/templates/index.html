@@ -38,26 +38,22 @@
     function validateForm() {
         var fileInputs = document.querySelectorAll('input[type="file"]');
         var filesUploadedCount = 0;
-        var formValid = false;
 
-        fileInputs.forEach(function(input) {})
-        
+        fileInputs.forEach(function(input) {
+            if (input.files.length > 0){
+                filesUploadedCount++;
+            }
+        });
 
+        if (filesUploadedCount === 4){
+            return true;
+        }
+        else {
+            alert("Please upload all four files");
+            return false;
+        }
         
-    
-        // for (var i = 0; i < radios.length; i++) {
-        //     if (radios[i].checked) {
-        //         formValid = true;
-        //         break;
-        //     }
-        // }
-    
-        // if (!formValid) {
-        //     alert("Please select a tone.");
-        //     return false;
-        // }
-    
-        return true;
+        return false;
     }
     </script>
 </head>
@@ -72,7 +68,7 @@
         <input type="file" name="productDescription" required>
         <small>Upload product details file</small><br><br>
 
-        <label for="sourceCompany">Source Company &nbsp;&nbsp;</label>
+        <label for="sourceCompany">Source Company &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label>
         <input type="file" name="sourceCompany" required>
         <small>Upload source Company details</small><br><br>
 

@@ -118,9 +118,9 @@ class EmailGenFromGemini():
                 <SOURCE_PERSON_DESIGNATION>
                     {self.source_person_designation}
                 </SOURCE_PERSON_DESIGNATION>
-                <SOURCE_COMPANY_DETAILS>
+                <SOURCE_COMPANY_NAME>
                     {self.source_company}
-                </SOURCE_COMPANY_DETIALS>
+                </SOURCE_COMPANY_NAME>
                 <TARGET_PERSON_NAME>
                     {self.target_person}
                 </TARGET_PERSON_NAME>
@@ -129,35 +129,39 @@ class EmailGenFromGemini():
                 </TARGET_COMPANY_NAME>
                 <CONTEXT>
                     <PRODUCT_DESCRIPTION_OF_SOURCE_COMPANY>
-                        {data_list[1]}
+                        {data_list[0]}
                     </PRODUCT_DESCRIPTION_OF_SOURCE_COMPANY>
                     <SOURCE_COMPANY_DATA>
-                        {data_list[0]}
+                        {data_list[1]}
                     </SOURCE_COMPANY_DATA>
                     <TARGET_COMPANY_DATA>
-                        {data_list[1]}
+                        {data_list[2]}
                     </TARGET_COMPANY_DATA>
                     <TARGET_PERSON_DATA>
-                        {data_list[2]}
+                        {data_list[3]}
                     </TARGET_PERSON_DATA>
                 </CONTEXT>
                 <TASK>
-                    1. Generate an email describing how Source company's product(s) can be useful for the Target Person and the Target Company.
-                    2. Maintain the required structure of the email: subject, proper salutation, body and regards and include the source person's name wherever necessary.
-                    3. Highlight the product/service features of Source company to the Target Person.
-                    4. Start the conversation in the email in a personalized way by talking about the Target Person,\
-                    their experiences, achievements, university education, and interests from the context provided.
-                    5. While considering the target person's experiences, focus mostly on latest role and working company.
-                    6. Do not use template names such as: [SOURCE_PERSON_NAME], [SOURCE_NAME], etc.. but use the given names in context wherever possible.
+                    1. Generate an email describing how <PRODUCT_DESCRIPTION_OF_SOURCE_COMPANY> can be useful for the <TARGET_PERSON_NAME>\
+                        and the <TARGET_COMPANY_NAME>.
+                    2. Use <SOURCE_COMPANY_DATA> to explain about <SOURCE_COMPANY_NAME> to the <TARGET_PERSON_NAME> wherever necessary.
+                    3. Commend the experience(s), education and achievement(s) related to the <TARGET_PERSON_NAME> and the <TARGET_COMPANY_NAME> in a few lines.
+                    4. Maintain the required structure of the email: subject, proper salutation, body and regards and include the <SOURCE_PERSON_NAME> wherever necessary.
+                    5. Using <PRODUCT_DESCRIPTION_OF_SOURCE_COMPANY>, highlight the product/service features of <SOURCE_COMPANY_NAME> to the Target Person.
+                    6. Start the conversation in the email in a personalized way by talking about the <TARGET_PERSON_NAME>,\
+                        their experiences, achievements, university education, and interests from the context provided.
+                    7. While considering the <TARGET_PERSON_DATA> experiences, focus mostly on latest role and working company.
+                    8. Do not use template names such as: [SOURCE_PERSON_NAME], [SOURCE_NAME], etc.. but use the given names in context wherever possible.
                 </TASK>
                 <SPECIFICATIONS>
-                    1. Stick only to the data provided, do not consider any external data or hallucinate.
-                    2. Do not include text regarding the source or target company/person that isn't present in the given context.
-                    3. Do not include more than 25-30 words in one line and give numbered bulletpoints only when necessary.
-                    4. Consider the required names of Source Person, Source Company, Target Person and Target Company from the context provided.
-                    5. Do not include hyperlinks/placeholder text in the content of the email.
-                    4. Generate the email based on the tone asked.
-                    5. You will also be given future instructions. If they are in conflict with the present ones, then consider the future ones.
+                    1. Keep the entire text within 80 words.
+                    2. Stick only to the data provided, do not consider any external data or hallucinate.
+                    3. Do not include text regarding the source or target company/person that isn't present in the given context.
+                    4. Do not include more than 20 words in one line and give numbered bulletpoints only when necessary.
+                    5. Consider the required names of Source Person, Source Company, Target Person and Target Company from the context provided.
+                    6. Do not include hyperlinks/placeholder text in the content of the email.
+                    7. Generate the email based on the tone asked.
+                    8. You will also be given future instructions. If they are in conflict with the present ones, then consider the future ones.
                 </SPECIFICATIONS>
                 '''
             
