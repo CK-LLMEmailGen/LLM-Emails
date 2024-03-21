@@ -139,15 +139,11 @@
             margin-bottom: 2%;
             margin-top: 2%;
         }
-        /* font{
-            font-size: 40px;
-            font-weight: 12px;
-            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-            margin-top: 30%;
-            align-items: center;
-            text-align: center;
+        .paragraph-display {
+            display: none; /* Initially hide the paragraph */
+            margin-top: 20px;
+        }
         
-        } */
     </style>
 </head>
 <body>
@@ -164,11 +160,14 @@
             <div class="sidebar" onclick="changeSidebarColor(this)">
                 <h1 onclick="showInputFields()" >My Details</h1>
             </div>
-            <div class="sidebar" onclick="showFilters(this)"">
-                <h1>Filters</h1>
+            <div class="sidebar" onclick="changeSidebarColor(this)">
+                <h1 onclick="showFilters(this)" >Filters</h1>
             </div>
             <div class="sidebar" onclick="changeSidebarColor(this)">
                 <h1 onclick="showTones()">Mail</h1>
+            </div>
+            <div class="sidebar" onclick="changeSidebarColor(this)">
+                <h1 onclick="trackMail()">Track Mail</h1>
             </div>
         </div>
     </div>
@@ -194,18 +193,34 @@
             <button type="button" onclick="submitFilters()" class="submit-button">Submit</button>
                 
         </div>
-        <div class="tones-container" style="display: none;" id="tonesContainer">
-            <div class="tone-column">
+        <div class="tones-container" style="display: none;" id="tonesContainer" onclick="changeToneColor(this)">
+            <div class="tone-column" onclick="showFormal()">
                 <h2>Formal</h2>
             </div>
-            <div class="tone-column">
+            <div class="tone-column" onclick="showSemiFormal()">
                 <h2>Semi-Formal</h2>
             </div>
-            <div class="tone-column">
+            <div class="tone-column" onclick="showInformal()">
                 <h2>Informal</h2>
             </div>
+            
+        </div>
+        <div class="trackMail" style="display: none;" id="trackMail">
+            <h3>Number of emails opened : 0</h3>
         </div>
     </div>
+    <div class="container">
+        <div id="formalParagraph" class="paragraph-display"  style="display: none;">
+            <h2>This is a formal mail</h2>
+        </div>
+        <div id="SemiFormal" class="paragraph-display" style="display: none;">
+            <h2>This is a Semi formal mail</h2>
+        </div>
+        <div id="Informal" class="paragraph-display" style="display: none;">
+            <h2>This is a informal mail</h2>
+        </div>
+        </div>
+    
 
 </div>
     
@@ -229,17 +244,38 @@
                     // Change the background color of the clicked sidebar
                     clickedElement.style.backgroundColor = '#d8848a'; // Change to desired color
                 }
+                // function changeToneColor(clickedElement) {
+                //     // Get all sidebar elements
+                //     var tonecolumns = document.querySelectorAll('.tone-column');
+            
+                //     // Reset background color of all sidebars
+                //     tonecolumns.forEach(function(toneColumn) {
+                //         toneColumn.style.backgroundColor = '#7ddbe6'; // Reset to default color
+                //     });
+            
+                //     // Change the background color of the clicked sidebar
+                //     clickedElement.style.backgroundColor = '#78b159'; // Change to desired color
+                // }
         function showInputFields() {
             var inputFields = document.getElementById("inputFields");
             var filtersSection = document.getElementById("filters");
             var tonesContainer = document.querySelector(".tones-container");
+            var trackmail = document.getElementById("trackMail");
 
             // Hide the filters section and tones container
             filtersSection.style.display = "none";
             tonesContainer.style.display = "none";
+            trackmail.style.display = "none";
+            var formalParagraph = document.getElementById("formalParagraph");
+            formalParagraph.style.display = "none"; 
+            var SemiFormal = document.getElementById("SemiFormal");
+            SemiFormal.style.display = "none"; 
+            var Informal = document.getElementById("Informal");
+            Informal.style.display = "none";
 
             // Show the input fields form
             inputFields.style.display = "block";
+
         }
 
         function showFilters(clickedElement) {
@@ -248,17 +284,26 @@
             inputFields.style.display = "none";
             var tonesContainer = document.getElementById("tonesContainer");
             tonesContainer.style.display = "none";
+            var trackmail = document.getElementById("trackMail");
+            trackmail.style.display = "none";
             // Show the filters section
             var filtersSection = document.getElementById("filters");
             filtersSection.style.display = "block";
 
-            changeSidebarColor(clickedElement)
+            var formalParagraph = document.getElementById("formalParagraph");
+            formalParagraph.style.display = "none"; 
+            var SemiFormal = document.getElementById("SemiFormal");
+            SemiFormal.style.display = "none"; 
+            var Informal = document.getElementById("Informal");
+            Informal.style.display = "none";
+
         }
 
         function showTones() {
             var tonesContainer = document.getElementById("tonesContainer");
             var inputFields = document.getElementById("inputFields");
             var filtersSection = document.getElementById("filters");
+            var trackmail = document.getElementById("trackMail")
 
            
             tonesContainer.style.display = "flex"; /* Use flexbox for layout */
@@ -269,6 +314,59 @@
             // Hide the input fields form and filters section
             inputFields.style.display = "none";
             filtersSection.style.display = "none";
+            trackmail.style.display = "none";
+            var formalParagraph = document.getElementById("formalParagraph");
+            formalParagraph.style.display = "none"; 
+            var SemiFormal = document.getElementById("SemiFormal");
+            SemiFormal.style.display = "none"; 
+            var Informal = document.getElementById("Informal");
+            Informal.style.display = "none";
+        }
+        function trackMail() {
+            var tonesContainer = document.getElementById("tonesContainer");
+            var inputFields = document.getElementById("inputFields");
+            var filtersSection = document.getElementById("filters");
+            var trackmail = document.getElementById("trackMail")
+           
+            // Hide the input fields form and filters section
+            inputFields.style.display = "none";
+            filtersSection.style.display = "none";
+            tonesContainer.style.display = "none";
+            trackmail.style.display = "flex";
+            var formalParagraph = document.getElementById("formalParagraph");
+            formalParagraph.style.display = "none"; 
+            var SemiFormal = document.getElementById("SemiFormal");
+            SemiFormal.style.display = "none"; 
+            var Informal = document.getElementById("Informal");
+            Informal.style.display = "none";
+
+        }
+
+        function showFormal() {
+            var formalParagraph = document.getElementById("formalParagraph");
+            formalParagraph.style.display = "block"; // Show the formal paragraph
+            var SemiFormal = document.getElementById("SemiFormal");
+            SemiFormal.style.display = "none";
+            var Informal = document.getElementById("Informal");
+            Informal.style.display = "none"; 
+        }
+        function showSemiFormal() {
+            var formalParagraph = document.getElementById("formalParagraph");
+            formalParagraph.style.display = "none"; 
+            var SemiFormal = document.getElementById("SemiFormal");
+            SemiFormal.style.display = "block"; // Show the formal paragraph
+            var Informal = document.getElementById("Informal");
+            Informal.style.display = "none";
+            
+        }
+        function showInformal() {
+            var formalParagraph = document.getElementById("formalParagraph");
+            formalParagraph.style.display = "none"; 
+            var SemiFormal = document.getElementById("SemiFormal");
+            SemiFormal.style.display = "none"; 
+            var Informal = document.getElementById("Informal");
+            Informal.style.display = "block"; // Show the formal paragraph
+            
         }
         
         function submitClientSpecs() {
