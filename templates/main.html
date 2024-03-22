@@ -424,6 +424,8 @@
             });
             document.querySelector('.sidebar:nth-child(3)').style.backgroundColor = '#d8848a'; // Change Filters to desired color
             form.reset();
+            var formalParagraph = document.getElementById("formalParagraph");
+            formalParagraph.style.display = "block"; 
             } else {
                 // Form is invalid, display an error message
                 alert("Please fill in all fields.");
