@@ -1,334 +1,6 @@
 <!-- <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Website</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 10px 20px;
-            height: 50px;
-        }
-        nav ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            position: fixed;
-        }
-        nav ul li {
-            display: inline;
-            margin-right: 20px;
-           
-        }
-        nav ul li a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 25px;
-           
-        }
-        .container {
-            width: 80%;
-            margin: 20px auto;
-            padding: 0 20px;
-            left: 70%;
-        }
-        .sidebar {
-            width: calc(33.33% - 13.33px);
-            
-            padding: 20px;
-            background-color: #7ddbe6;
-            margin-right: 2px;
-            margin-bottom: 20px;
-            border-radius: 5%;
-            text-align: center;
-            cursor:pointer;
-            
-        }
-        .clear {
-            clear: both;
-        }
-        .input-fields {
-            display:none;
-            background-color: #d8848a;
-            border-radius: 5px;
-            padding: 5px;
-            width:58%;
-            float:right;
-            margin-top:-59%;
-            margin-left:20%;
-            left:50%;
-            
-        }
-        .input-fields label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            margin:10px;
-            margin-left:5%;
-        }
-        .input-fields input[type="text"],
-        .input-fields input[type="file"] {
-            width: calc(90% - 20px);
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #191717;
-            border-radius: 4px;
-            box-sizing: border-box;
-            margin:10px;
-            margin-left:5%;
-            background-color: #fff;
-        }
-        .input-fields input[type="file"] {
-            cursor: pointer;
-        }
-        .input-fields input[type="file"]::placeholder {
-            color: #efe9e9;
-        }
-        .input-fields input[type="file"]:focus {
-            outline: none;
-            border-color: rgb(32, 28, 28);
-        }
-        .submit-button {
-            background-color: #4d6872;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            height: 15%;
-        }
-        /* .submit-button:hover {
-            background-color: #45a049;
-        } */
-        .flex-container {
-            display: flex;
-            margin-top: 20px;
-            justify-content: space-between;
-        }
-        .tones-container {
-            margin-top: 20px;
-            display: flex;
-            justify-content: space-between;
-            width:59%;
-            float:right;
-            margin-top:-59%;
-        }
-        .tone-column {
-            width: calc(33.33% - 13.33px);
-            padding: 10px;
-            background-color: #ec9b9b;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            text-align: center;
-            
-            
-        }
-        button{
-            margin-left:42.5%;
-            margin-bottom: 2%;
-            margin-top: 2%;
-        }
-        .image-container {
-            float: left;
-            margin: 20px;
-            
-        }
-        .image-container img {
-            width: 90%;
-            height: auto;
-            border-radius: 5%;
-            margin: 2%;
-
-        }
-    
-        
-    </style>
-</head>
-<body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-            </ul>
-        </nav>
-    </header>
-    <div>
-        
-        <div class="image-container">
-        <div>
-            <img src="https://media.istockphoto.com/id/1148931787/photo/email-marketing.webp?b=1&s=170667a&w=0&k=20&c=3fxzdpZvC2g-esMhqtAzcVHK_rIhxrMvK-cgdyxtNO4=" alt="Image">
-        </div>
-        <div >
-            <img src="https://media.istockphoto.com/id/1282806068/photo/email-marketing-concept-person-reading-e-mail-on-smartphone.jpg?s=612x612&w=0&k=20&c=NDoQ6NcTNAYi4Xsn30XVmB-QXdr907PTOQPnqLNdAlc=" alt="Image">
-        </div>
-        </div>
-    <div class="container">
-        
-        <div class="flex-container" >
-            <div class="sidebar" onclick="changeSidebarColor(this)">
-                <h3 onclick="showInputFields()">Client Specifications</h3>
-                
-            </div>
-            <div class="sidebar" id="filtersSiderbar" onclick="changeSidebarColor(this)">
-                <h3>Filters</h3>
-            </div>
-
-            <div class="sidebar" onclick="changeSidebarColor(this)">
-                <h3 onclick="showTones()">Mail</h3>
-            </div>
-        </div>
-        <div class="clear"></div>
-    </div>
-    <div class="container">
-        <form action="#" method="post" id="clientSpecificationsForm" enctype="multipart/form-data" onsubmit="return validateClientFilesUpload() && validateTextBoxes()">
-            <div class="input-fields" id="inputFields" >
-                <label for="senderName">Sender Name:</label>
-                <input type="text" id="senderName" name="senderName" placeholder="Enter sender name"><br>
-                <label for="senderName">Designation:</label>
-                <input type="text" id="designation" name="designation" placeholder="Enter sender designation"><br>
-                <label for="productDescription">Product Description Text File:</label>
-                <input type="file" id="productDescription" name="productDescription" accept=".txt" placeholder="Upload product description text file"><br>
-                <label for="sourceCompanyFile">Source Company Text File:</label>
-                <input type="file" id="companyFile" name="sourceCompanyFile" accept=".txt" placeholder="Upload source company text file"><br>
-                <button type="submit" class="submit-button">Submit</button>
-            </div>
-        </form>
-    </div>
-    <div class="container" id="targetSpecificationsContainer" style="display: none;">
-        <form action="#" method="post" id="targetSpecificationsForm" enctype="multipart/form-data" onsubmit="return validateFilesUpload() && validateTextBoxes()">
-            <div class="input-fields" id="inputFields">
-                <label for="targetCompanyName">Target Company Name:</label>
-                <input type="text" id="targetCompanyName" name="targetCompanyName" placeholder="Enter Target Company Name"><br>
-                <label for="targetPersonName">Target Person Name:</label>
-                <input type="text" id="targetPersonName" name="targetPersonName" placeholder="Enter Target Person Name"><br>
-                <label for="targetCompanyDescription">Target Company Description Text File:</label>
-                <input type="file" id="targetCompanyDescription" name="targetCompanyDescription" accept=".txt" placeholder="Upload target company text file"><br>
-                <button type="submit" class="submit-button">Submit</button>
-            </div>
-        </form>
-    </div>
-    <div class="container">
-        <div class="tones-container" style="display: none;" id="tonesContainer">
-            <div class="tone-column">
-                <h3>Formal</h3>
-            </div>
-            <div class="tone-column">
-                <h3>Semi-Formal</h3>
-            </div>
-            <div class="tone-column">
-                <h3>Informal</h3>
-            </div>
-        </div>
-    </div>
-</div>
-
-    <script>
-        function validateClientTextBoxes() {
-            var senderName = document.getElementById('senderName').value.trim();
-            var designation = document.getElementById('designation').value.trim();
-            var senderNamePlaceholder = document.getElementById('senderName').placeholder.trim();
-            var designationPlaceholder = document.getElementById('designation').placeholder.trim();
-
-
-            if (senderName === senderNamePlaceholder || designation === designationPlaceholder) {
-                alert("Please fill in both text boxes!");
-                return false;
-            }
-            showTargetSpecificationsForm();
-            return true;
-        }
-
-        function showTargetSpecificationsForm(){
-            document.getElementById("targetSpecificationsContainer").style.display = "block";
-        }
-
-        function validateTargetTextBoxes() {
-            var senderName = document.getElementById('targetCompanyName').value.trim();
-            var designation = document.getElementById('targetPersonName').value.trim();
-            var senderNamePlaceholder = document.getElementById('targetCompanyName').placeholder.trim();
-            var designationPlaceholder = document.getElementById('targetPersonName').placeholder.trim();
-
-
-            if (senderName === senderNamePlaceholder || designation === designationPlaceholder) {
-                alert("Please fill in both text boxes!");
-                return false;
-            }
-
-            return true;
-        }
-
-        function validateFilesUpload(){
-            var fileInputs = document.querySelectorAll('input[type="file"]');
-            var fileUploadedCount = 0;
-
-            fileInputs.forEach(function(input) {
-                if (input.files.length > 0){
-                    filesUploadedCount++;
-                }
-            });
-
-            if (filesUploadedCount === 2){
-                return true;
-            }
-
-            else {
-                alert("Pleaase upload both files!");
-                return false;
-            }
-
-            return false;
-        }
-        function showInputFields() {
-            var inputFields = document.getElementById("inputFields");
-            if (inputFields.style.display === "none") {
-                tonesContainer.style.display = "none"
-                inputFields.style.display = "block";
-            } else {
-                inputFields.style.display = "none";
-            }
-        }
-        function showTones() {
-            var tonesContainer = document.getElementById("tonesContainer");
-            var inputFields = document.getElementById("inputFields");
-            if (tonesContainer.style.display === "none") {
-                inputFields.style.display = "none";
-                tonesContainer.style.display = "flex";
-                tonesContainer.style.flexDirection = "row";
-            } else {
-                tonesContainer.style.display = "none";
-            }
-        }
-
-
-        function changeSidebarColor(clickedElement) {
-        // Get all sidebar elements
-        var sidebars = document.querySelectorAll('.sidebar');
-
-        // Reset background color of all sidebars
-        sidebars.forEach(function(sidebar) {
-            sidebar.style.backgroundColor = '#7ddbe6'; // Reset to default color
-        });
-
-        // Change the background color of the clicked sidebar
-        clickedElement.style.backgroundColor = '#d8848a'; // Change to desired color
-    }
-</script>
-
-</body>
-</html> -->
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Upload Files</title>
@@ -422,4 +94,263 @@
 </div>
 
 </body>
-</html>
+</html> -->
+
+
+
+<!-- The client specifications, filters and mail: are not showing their respective forms when clicked -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            height: 50px;
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            position: fixed;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 25px;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 0 20px;
+            text-align: center; /* Center align content */
+        }
+        .sidebar {
+            width: calc(33.33% - 13.33px);
+            padding: 20px;
+            background-color: #7ddbe6;
+            margin-right: 2px;
+            margin-bottom: 20px;
+            border-radius: 5%;
+            text-align: center;
+            cursor: pointer;
+        }
+        .clear {
+            clear: both;
+        }
+        .input-fields {
+            display: none;
+            background-color: #d8848a;
+            border-radius: 5px;
+            padding: 5px;
+            width: 58%;
+            float: right;
+            margin-top: -59%;
+            margin-left: 20%;
+            left: 50%;
+        }
+        .input-fields label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            margin: 10px;
+            margin-left: 5%;
+        }
+        .input-fields input[type="text"],
+        .input-fields input[type="file"],
+        .input-fields textarea {
+            width: calc(90% - 20px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #191717;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin: 10px;
+            margin-left: 5%;
+            background-color: #fff;
+        }
+        .input-fields input[type="file"],
+        .input-fields textarea {
+            cursor: pointer;
+        }
+        .input-fields input[type="file"]::placeholder,
+        .input-fields textarea::placeholder {
+            color: #efe9e9;
+        }
+        .input-fields input[type="file"]:focus,
+        .input-fields textarea:focus {
+            outline: none;
+            border-color: rgb(32, 28, 28);
+        }
+        .submit-button {
+            background-color: #4d6872;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            height: 15%;
+        }
+        .flex-container {
+            display: flex;
+            margin-top: 20px;
+            justify-content: space-between;
+        }
+        .tones-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            width: 59%;
+            float: right;
+            margin-top: -59%;
+        }
+        .tone-column {
+            width: calc(33.33% - 13.33px);
+            padding: 10px;
+            background-color: #ec9b9b;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            text-align: center;
+        }
+        button {
+            margin-left: 42.5%;
+            margin-bottom: 2%;
+            margin-top: 2%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="flex-container" >
+            <div class="sidebar" onclick="changeSidebarColor(this)">
+                <h3 onclick="showInputFields()">Client Specifications</h3>
+            </div>
+            <div class="sidebar" onclick="changeSidebarColor(this)">
+                <h3>Filters</h3>
+            </div>
+            <div class="sidebar" onclick="changeSidebarColor(this)">
+                <h3 onclick="showTones()">Mail</h3>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="container">
+        <form action="#" method="post" id="clientSpecificationsForm">
+            <div class="input-fields" id="inputFields" >
+                <label for="senderName">Sender Name:</label>
+                <input type="text" id="senderName" name="senderName" placeholder="Enter sender name"><br>
+                <label for="senderName">Designation:</label>
+                <input type="text" id="designation" name="designation" placeholder="Enter sender designation"><br>
+                <label for="productDescription">Product Description Text File:</label>
+                <input type="file" id="productDescription" name="productDescription" accept=".txt" placeholder="Upload product description text file"><br>
+                <label for="companyFile">Source Company Text File:</label>
+                <input type="file" id="companyFile" name="companyFile" accept=".txt" placeholder="Upload company text file"><br>
+                <button type="button" onclick="submitClientSpecs()" class="submit-button">Submit</button>
+            </div>
+        </form>
+    </div>
+    <div class="container">
+        <form action="#" method="post" id="filtersForm" style="display: none;">
+            <div class="input-fields">
+                <label for="filter1">Filter 1 Text File:</label>
+                <input type="file" id="filter1" name="filter1" accept=".txt" placeholder="Upload filter 1 text file"><br>
+                <label for="filter2">Filter 2 Text File:</label>
+                <input type="file" id="filter2" name="filter2" accept=".txt" placeholder="Upload filter 2 text file"><br>
+                <button type="button" onclick="submitFilters()" class="submit-button">Submit</button>
+            </div>
+        </form>
+    </div>
+    <div class="container">
+        <div class="tones-container" style="display: none;" id="tonesContainer">
+            <div class="tone-column">
+                <h3>Formal</h3>
+            </div>
+            <div class="tone-column">
+                <h3>Semi-Formal</h3>
+            </div>
+            <div class="tone-columnCertainly! I'll complete the JavaScript code for your webpage to ensure it functions correctly. Here's the rest of the JavaScript code:
+
+                        <div class="tone-column">
+                            <h3>Informal</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <script>
+                function showInputFields() {
+                    var inputFields = document.getElementById("inputFields");
+                    if (inputFields.style.display === "none") {
+                        inputFields.style.display = "block";
+                    } else {
+                        inputFields.style.display = "none";
+                    }
+                }
+            
+                function submitClientSpecs() {
+                    var inputFields = document.getElementById("inputFields");
+                    var filtersForm = document.getElementById("filtersForm");
+                    inputFields.style.display = "none";
+                    filtersForm.style.display = "block";
+                }
+            
+                function submitFilters() {
+                    var filtersForm = document.getElementById("filtersForm");
+                    var tonesContainer = document.getElementById("tonesContainer");
+                    filtersForm.style.display = "none";
+                    tonesContainer.style.display = "flex";
+                    tonesContainer.style.flexDirection = "row";
+                }
+            
+                function showTones() {
+                    var tonesContainer = document.getElementById("tonesContainer");
+                    var inputFields = document.getElementById("inputFields");
+                    var filtersForm = document.getElementById("filtersForm");
+                    if (tonesContainer.style.display === "none") {
+                        inputFields.style.display = "none";
+                        filtersForm.style.display = "none";
+                        tonesContainer.style.display = "flex";
+                        tonesContainer.style.flexDirection = "row";
+                    } else {
+                        tonesContainer.style.display = "none";
+                    }
+                }
+            
+                function changeSidebarColor(clickedElement) {
+                    // Get all sidebar elements
+                    var sidebars = document.querySelectorAll('.sidebar');
+            
+                    // Reset background color of all sidebars
+                    sidebars.forEach(function(sidebar) {
+                        sidebar.style.backgroundColor = '#7ddbe6'; // Reset to default color
+                    });
+            
+                    // Change the background color of the clicked sidebar
+                    clickedElement.style.backgroundColor = '#d8848a'; // Change to desired color
+                }
+            </script>
+            </body>
+            </html>

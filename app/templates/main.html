@@ -1,0 +1,540 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Upload Files</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+    input[type="file"] {
+        margin-bottom: 10px;
+    }
+    input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+</style>
+<script>
+    function validateForm() {
+        var fileInputs = document.querySelectorAll('input[type="file"]');
+        var filesUploadedCount = 0;
+
+        fileInputs.forEach(function(input) {
+            if (input.files.length > 0){
+                filesUploadedCount++;
+            }
+        });
+
+        if (filesUploadedCount === 4){
+            return true;
+        }
+        else {
+            alert("Please upload all four files");
+            return false;
+        }
+        
+        return false;
+    }
+    </script>
+</head>
+<body>
+
+<div class="container">
+    <h2>Upload Files</h2>
+    
+    <form method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+
+        <label for="productDescription">Product Description &nbsp;&nbsp;:</label>
+        <input type="file" name="productDescription" required>
+        <small>Upload product details file</small><br><br>
+
+        <label for="sourceCompany">Source Company &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label>
+        <input type="file" name="sourceCompany" required>
+        <small>Upload source Company details</small><br><br>
+
+        <label for="targetCompany">Target Company&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;:</label>
+        <input type="file" name="targetCompany" required>
+        <small>Upload taget company details</small><br><br>
+        
+        <label for="targetPerson">Target Person&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label>
+        <input type="file" name="targetPerson" required>
+        <small>Upload target person details</small><br><br>
+
+        <input type="submit" value="Upload Files">
+
+    </form>
+    {% if text %}
+    <div id="message-container" style="border: 1px solid #ccc; padding: 10px; overflow: auto;">
+        <pre style="white-space: pre-wrap; word-wrap: break-word;">{{ text }}</pre>
+    </div>
+    {% endif %}
+    
+</div>
+
+</body>
+</html> -->
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            height: 50px;
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            position: fixed;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 25px;
+        }
+        .container {
+            width: 65%;
+            margin: 20px auto;
+            padding: 0 20px;
+            text-align: center; /* Center align content */
+        }
+        .inner-container{
+            width: 75%;
+            margin: 20px auto;
+            padding: 0 20px;
+            text-align: center; /* Center align content */
+            margin-left:27%;
+        }
+        .sidebar {
+            width: calc(33.33% - 13.33px);
+            /* padding: 5px; */
+            background-color: #7ddbe6;
+            margin-right: 2px;
+            margin-bottom: 15px;
+            border-radius: 5%;
+            text-align: center;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            
+        }
+        .clear {
+            clear: both;
+        }
+        .input-fields {
+            display: none;
+            background-color: #d8848a;
+            border-radius: 5px;
+            padding: 5px;
+            width: 58%;
+            float:left;
+
+        }
+        .input-fields label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            margin-top: 10px;
+            float:left;
+            margin-left:2%;
+           }
+        .input-fields input[type="text"],
+        .input-fields input[type="file"],
+        .input-fields textarea {
+            width: calc(90% - 20px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #191717;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin: 10px;
+            
+            background-color: #fff;
+        }
+        .input-fields input[type="file"],
+        .input-fields textarea {
+            cursor: pointer;
+        }
+        .input-fields input[type="file"]::placeholder,
+        .input-fields textarea::placeholder {
+            color: #efe9e9;
+        }
+        .input-fields input[type="file"]:focus,
+        .input-fields textarea:focus {
+            outline: none;
+            border-color: rgb(32, 28, 28);
+        }
+        .submit-button {
+            background-color: #4d6872;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            height: 15%;
+            margin-left: -10%;
+        }
+        .flex-container {
+            display: flex;
+            margin-top: 20px;
+            justify-content: space-between;
+        }
+        .tones-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            width: 59%;
+            /* float: right; */
+            
+        }
+        .tone-column {
+            width: calc(33.33% - 13.33px);
+            padding: 10px;
+            background-color: #ec9b9b;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            text-align: center;
+        }
+        button {
+            margin-left: 42.5%;
+            margin-bottom: 2%;
+            margin-top: 2%;
+        }
+        .paragraph-display {
+            display: none; /* Initially hide the paragraph */
+            margin-top: 20px;
+            margin-left:17%;
+            width:70%;
+            text-align: left;
+        }
+        
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="flex-container" >
+            <div class="sidebar" onclick="changeSidebarColor(this)">
+                <h1 onclick="showInputFields()" >My Details</h1>
+            </div>
+            <div class="sidebar" onclick="changeSidebarColor(this)">
+                <h1 onclick="showFilters(this)" >Filters</h1>
+            </div>
+            <div class="sidebar" onclick="changeSidebarColor(this)">
+                <h1 onclick="showTones()">Mail</h1>
+            </div>
+            <div class="sidebar" onclick="changeSidebarColor(this)">
+                <h1 onclick="trackMail()">Track Mail</h1>
+            </div>
+        </div>
+    </div>
+    <div class="inner-container">
+        <form action="#" method="post" id="clientSpecificationsForm">
+            <div class="input-fields" id="inputFields" >
+                <label for="senderName">Sender Name:</label>
+                <input type="text" id="senderName" name="senderName" placeholder="Enter sender name" required><br>
+                <label for="senderName">Designation:</label>
+                <input type="text" id="designation" name="designation" placeholder="Enter sender designation" required><br>
+                <label for="productDescription">Product Description Text File:</label>
+                <input type="file" id="productDescription" name="productDescription" accept=".txt" placeholder="Upload product description text file" required><br>
+                <label for="companyFile">Source Company Text File:</label>
+                <input type="file" id="companyFile" name="companyFile" accept=".txt" placeholder="Upload company text file" required><br>
+                <button type="button" onclick="submitClientSpecs()" class="submit-button">Submit</button>
+            </div>
+        </form>
+        <form action="#" method="post" id="filtersForm">
+        <div id="filters" style="display: none;" class="input-fields">
+            <label for="targetCompanyFile">Target Company Text File:</label>
+            <input type="file" id="targetCompanyFile" name="targetCompanyFile" accept=".txt" placeholder="Upload TargetCompany text file" required><br>
+            <label for="targetPersonFile">Target Person Text File:</label>
+            <input type="file" id="targetPersonFile" name="targetPersonFile" accept=".txt" placeholder="Upload Target Person text file" required><br>
+            <button type="button" onclick="submitFilters()" class="submit-button">Submit</button>
+                
+        </div>
+        </form>
+        <div class="tones-container" style="display: none;" id="tonesContainer" onclick="changeToneColor(this)">
+            <div class="tone-column" onclick="showFormal()">
+                <h2>Formal</h2>
+            </div>
+            <div class="tone-column" onclick="showSemiFormal()">
+                <h2>Semi-Formal</h2>
+            </div>
+            <div class="tone-column" onclick="showInformal()">
+                <h2>Jovial</h2>
+            </div>
+            
+        </div>
+        <div class="trackMail" style="display: none;" id="trackMail">
+            <h3>Number of emails opened : 0</h3>
+        </div>
+    </div>
+    <div class="container">
+        <div id="formalParagraph" class="paragraph-display"  style="display: none;">
+            <h2>This is a formal mail</h2>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum nisi assumenda impedit nemo voluptate suscipit iusto ipsa dignissimos, accusamus laudantium neque unde possimus rerum! Iure ea quo architecto ab illum.</p>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum nisi assumenda impedit nemo voluptate suscipit iusto ipsa dignissimos, accusamus laudantium neque unde possimus rerum! Iure ea quo architecto ab illum.</p>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum nisi assumenda impedit nemo voluptate suscipit iusto ipsa dignissimos, accusamus laudantium neque unde possimus rerum! Iure ea quo architecto ab illum.</p>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum nisi assumenda impedit nemo voluptate suscipit iusto ipsa dignissimos, accusamus laudantium neque unde possimus rerum! Iure ea quo architecto ab illum.</p>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum nisi assumenda impedit nemo voluptate suscipit iusto ipsa dignissimos, accusamus laudantium neque unde possimus rerum! Iure ea quo architecto ab illum.</p>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum nisi assumenda impedit nemo voluptate suscipit iusto ipsa dignissimos, accusamus laudantium neque unde possimus rerum! Iure ea quo architecto ab illum.</p>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum nisi assumenda impedit nemo voluptate suscipit iusto ipsa dignissimos, accusamus laudantium neque unde possimus rerum! Iure ea quo architecto ab illum.</p>
+        
+        </div>
+        <div id="SemiFormal" class="paragraph-display" style="display: none;">
+            <h2>This is a Semi formal mail</h2>
+        </div>
+        <div id="Informal" class="paragraph-display" style="display: none;">
+            <h2>This is a jovial mail</h2>
+        </div>
+        </div>
+    
+
+</div>
+    
+    <script>
+        window.onload = function() {
+  // Display the form by changing its display style to 'block'
+  document.querySelector('.sidebar h1').parentNode.style.backgroundColor = '#d8848a';
+            
+  document.getElementById('inputFields').style.display = 'block';
+};
+
+        function changeSidebarColor(clickedElement) {
+                    // Get all sidebar elements
+                    var sidebars = document.querySelectorAll('.sidebar');
+            
+                    // Reset background color of all sidebars
+                    sidebars.forEach(function(sidebar) {
+                        sidebar.style.backgroundColor = '#7ddbe6'; // Reset to default color
+                    });
+            
+                    // Change the background color of the clicked sidebar
+                    clickedElement.style.backgroundColor = '#d8848a'; // Change to desired color
+                }
+                
+        function showInputFields() {
+            var inputFields = document.getElementById("inputFields");
+            var filtersSection = document.getElementById("filters");
+            var tonesContainer = document.querySelector(".tones-container");
+            var trackmail = document.getElementById("trackMail");
+
+            // Hide the filters section and tones container
+            filtersSection.style.display = "none";
+            tonesContainer.style.display = "none";
+            trackmail.style.display = "none";
+            var formalParagraph = document.getElementById("formalParagraph");
+            formalParagraph.style.display = "none"; 
+            var SemiFormal = document.getElementById("SemiFormal");
+            SemiFormal.style.display = "none"; 
+            var Informal = document.getElementById("Informal");
+            Informal.style.display = "none";
+
+            // Show the input fields form
+            inputFields.style.display = "block";
+
+        }
+
+        function showFilters(clickedElement) {
+            // Hide the input fields form
+            var inputFields = document.getElementById("inputFields");
+            inputFields.style.display = "none";
+            var tonesContainer = document.getElementById("tonesContainer");
+            tonesContainer.style.display = "none";
+            var trackmail = document.getElementById("trackMail");
+            trackmail.style.display = "none";
+            // Show the filters section
+            var filtersSection = document.getElementById("filters");
+            filtersSection.style.display = "block";
+
+            var formalParagraph = document.getElementById("formalParagraph");
+            formalParagraph.style.display = "none"; 
+            var SemiFormal = document.getElementById("SemiFormal");
+            SemiFormal.style.display = "none"; 
+            var Informal = document.getElementById("Informal");
+            Informal.style.display = "none";
+
+        }
+
+        function showTones() {
+            var tonesContainer = document.getElementById("tonesContainer");
+            var inputFields = document.getElementById("inputFields");
+            var filtersSection = document.getElementById("filters");
+            var trackmail = document.getElementById("trackMail")
+            
+           
+            tonesContainer.style.display = "flex"; /* Use flexbox for layout */
+            tonesContainer.style.flexDirection = "row"; /* Arrange items in a column */
+            tonesContainer.style.alignItems = "center"; /* Center items horizontally */
+           
+
+
+            // Hide the input fields form and filters section
+            inputFields.style.display = "none";
+            filtersSection.style.display = "none";
+            trackmail.style.display = "none";
+            var formalParagraph = document.getElementById("formalParagraph");
+            formalParagraph.style.display = "block"; 
+            var SemiFormal = document.getElementById("SemiFormal");
+            SemiFormal.style.display = "none"; 
+            var Informal = document.getElementById("Informal");
+            Informal.style.display = "none";
+        }
+        function trackMail() {
+            var tonesContainer = document.getElementById("tonesContainer");
+            var inputFields = document.getElementById("inputFields");
+            var filtersSection = document.getElementById("filters");
+            var trackmail = document.getElementById("trackMail")
+           
+            // Hide the input fields form and filters section
+            inputFields.style.display = "none";
+            filtersSection.style.display = "none";
+            tonesContainer.style.display = "none";
+            trackmail.style.display = "flex";
+            var formalParagraph = document.getElementById("formalParagraph");
+            formalParagraph.style.display = "none"; 
+            var SemiFormal = document.getElementById("SemiFormal");
+            SemiFormal.style.display = "none"; 
+            var Informal = document.getElementById("Informal");
+            Informal.style.display = "none";
+
+        }
+
+        function showFormal() {
+            var formalParagraph = document.getElementById("formalParagraph");
+            formalParagraph.style.display = "block"; // Show the formal paragraph
+            var SemiFormal = document.getElementById("SemiFormal");
+            SemiFormal.style.display = "none";
+            var Informal = document.getElementById("Informal");
+            Informal.style.display = "none"; 
+        }
+        function showSemiFormal() {
+            var formalParagraph = document.getElementById("formalParagraph");
+            formalParagraph.style.display = "none"; 
+            var SemiFormal = document.getElementById("SemiFormal");
+            SemiFormal.style.display = "block"; // Show the formal paragraph
+            var Informal = document.getElementById("Informal");
+            Informal.style.display = "none";
+            
+        }
+        function showInformal() {
+            var formalParagraph = document.getElementById("formalParagraph");
+            formalParagraph.style.display = "none"; 
+            var SemiFormal = document.getElementById("SemiFormal");
+            SemiFormal.style.display = "none"; 
+            var Informal = document.getElementById("Informal");
+            Informal.style.display = "block"; // Show the formal paragraph
+            
+        }
+        
+        function submitClientSpecs() {
+            var filtersSection = document.getElementById("filters");
+            var inputFields = document.getElementById("inputFields");
+
+            var form = document.getElementById("clientSpecificationsForm");
+            var isValid = form.checkValidity(); // Check if the form is valid
+
+            if (isValid) {
+                // Form is valid, proceed with form submission or other actions
+                // form.submit(); // Submit the form
+                // Show the filters section
+            filtersSection.style.display = "block";
+            
+            // Hide the input fields form
+            inputFields.style.display = "none";
+
+            // Change the background color of the Filters sidebar
+            var sidebars = document.querySelectorAll('.sidebar');
+            sidebars.forEach(function(sidebar) {
+                sidebar.style.backgroundColor = '#7ddbe6'; // Reset to default color
+            });
+            document.querySelector('.sidebar:nth-child(2)').style.backgroundColor = '#d8848a'; // Change Filters to desired color
+            form.reset();
+                
+            } else {
+                // Form is invalid, display an error message
+                alert("Please fill in all required fields.");
+            }
+        }
+        function submitFilters() {
+            var tonesContainer = document.getElementById("tonesContainer");
+            var filtersSection = document.getElementById("filters");
+            
+            var form = document.getElementById("filtersForm");
+            var isValid = form.checkValidity(); // Check if the form is valid
+
+            if (isValid) {
+                // Form is valid, proceed with form submission or other actions
+                // form.submit(); // Submit the form
+                tonesContainer .style.display = "flex";
+            // Show the filters section
+            filtersSection.style.display = "none";
+            
+
+            // Change the background color of the Filters sidebar
+            var sidebars = document.querySelectorAll('.sidebar');
+            sidebars.forEach(function(sidebar) {
+                sidebar.style.backgroundColor = '#7ddbe6'; // Reset to default color
+            });
+            document.querySelector('.sidebar:nth-child(3)').style.backgroundColor = '#d8848a'; // Change Filters to desired color
+            form.reset();
+            var formalParagraph = document.getElementById("formalParagraph");
+            formalParagraph.style.display = "block"; 
+            } else {
+                // Form is invalid, display an error message
+                alert("Please fill in all fields.");
+            }
+            
+        }
+       
+
+        </script>
+    </body>
+    </html>
