@@ -92,8 +92,16 @@ async def upload_files(request: Request,
                        targetCompany: UploadFile = File(...),
                        targetPerson: UploadFile = File(...),
                        ):
+        source_name = None
+        target_company_name = None
+        target_person_name = None
+        
         try:
             file_objects_list = [productDescription, sourceCompany, targetCompany, targetPerson]                                            # list of file objects
+            source_name = file_objects_list[1].filename.split('.')[0]
+            target_company_name = file_objects_list[2].filename.split('.')[0]
+            target_person_name = file_objects_list[3].filename.split('.')[0]
+            # print(source_name + " " + target_company_name + " " + target_person_name)
             
             for i in range(4):  
                 file_path_list.append(os.path.join(folder_path_list[i], file_objects_list[i].filename))
@@ -147,9 +155,9 @@ async def upload_files(request: Request,
                         source_path = file_path_list[1],
                         target_company_path = file_path_list[2],
                         target_person_path = file_path_list[3],
-                        source_company = "Mondee",
-                        target_company = "Accenture",
-                        target_person = "Karan Gupta")
+                        source_company = source_name,
+                        target_company = target_company_name,
+                        target_person = target_person_name)
             mail_obj = mail_gen_instance.email_generation()
             
             html_response = f"<!DOCTYPE html>\

@@ -10,6 +10,7 @@ tone_dict = {
     Don't also forget to highlight key points from <TARGET_COMPANY_DATA> to highlight <TARGET_COMPANY_NAME>'s experience in their respective fields. (This shows that <SOURCE_PERSON> took time to research about <TARGET_COMPANY_NAME>'s data).
     Conclude with a formal expression of collaboration between <SOURCE_COMPANY_NAME> and <TARGET_COMPANY_NAME>.
     The tone must be very formal, but not too monotonic. Do not consider data that is not given in context and don't hallucinate.
+    Do not include templates names such as; [Source_person_name], etc...
     ''',
 
 "semi-formal":
@@ -21,6 +22,7 @@ tone_dict = {
     Conclude the email with a courteous invitation for further discussion or collaboration between <SOURCE_COMPANY_NAME> and <TARGET_COMPANY_NAME>,
     maintaining a tone that is respectable, but a bit fiendly and humorous, make the email different than the formal tone.
     Don't consider data that is not present in the context given and don't hallucinate.
+    Do not include templates names such as; [Source_person_name], etc...
     ''',
 
 "jovial":
@@ -33,6 +35,7 @@ tone_dict = {
     and conclude the email with an invitation for further discussion or collaboration. Maintain an overall lively and friendly tone throughout.
     Include emojis wherever possible.
     Don't consider data that is not present in the context given and don't hallucinate.
+    Do not include templates names such as; [Source_person_name], etc...
     '''        
 }
 
